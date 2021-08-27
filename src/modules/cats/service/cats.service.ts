@@ -6,7 +6,7 @@ import {
   Owner,
   OwnerDocument,
 } from '../../../modules/owner/models/schema/owner.schema';
-import { CreateCat } from '../models/dto/ICreateCatDTO';
+import { ICreateCatDTO } from '../models/dto/ICreateCatDTO';
 import { Cat, CatDocument } from '../models/schema/cat.schema';
 
 @Injectable()
@@ -16,7 +16,7 @@ export class CatsService {
     @InjectModel(Owner.name) private ownerModel: Model<OwnerDocument>,
   ) {}
 
-  async create(cat: CreateCat): Promise<CreateCat> {
+  async create(cat: ICreateCatDTO): Promise<ICreateCatDTO> {
     const ownerCat: ICreateOwnerDTO = await this.ownerModel
       .findOne({ _id: cat.owner })
       .exec();
@@ -29,12 +29,12 @@ export class CatsService {
     return await createdCat.save();
   }
 
-  async findAll(): Promise<Array<CreateCat>> {
+  async findAll(): Promise<Array<ICreateCatDTO>> {
     return await this.catModel.find().exec();
   }
 
-  async findById(id: string): Promise<CreateCat> {
-    const cat: CreateCat = await this.catModel.findOne({ _id: id }).exec();
+  async findById(id: string): Promise<ICreateCatDTO> {
+    const cat: ICreateCatDTO = await this.catModel.findOne({ _id: id }).exec();
 
     if (!cat) {
       throw new Error('This cat not exists in cat list!');
@@ -43,7 +43,7 @@ export class CatsService {
     return cat;
   }
 
-  async findByOwner(id: string): Promise<Array<CreateCat>> {
+  async findByOwner(id: string): Promise<Array<ICreateCatDTO>> {
     const ownerCat: ICreateOwnerDTO = await this.ownerModel
       .findOne({ _id: id })
       .exec();
@@ -55,8 +55,8 @@ export class CatsService {
     return await this.catModel.find({ owner: id }).exec();
   }
 
-  async update(id: string, cat: CreateCat): Promise<CreateCat> {
-    const catSearch: CreateCat = await this.catModel
+  async update(id: string, cat: ICreateCatDTO): Promise<ICreateCatDTO> {
+    const catSearch: ICreateCatDTO = await this.catModel
       .findOne({ _id: id })
       .exec();
 
@@ -64,7 +64,7 @@ export class CatsService {
       throw new Error('This cat not exists in cat list!');
     }
 
-    const catUpdate: CreateCat = await this.catModel
+    const catUpdate: ICreateCatDTO = await this.catModel
       .findOneAndUpdate(
         { _id: id },
         { name: cat.name, age: cat.age },
@@ -76,7 +76,7 @@ export class CatsService {
   }
 
   async delete(id: string): Promise<string> {
-    const cat: CreateCat = await this.catModel.findOne({ _id: id }).exec();
+    const cat: ICreateCatDTO = await this.catModel.findOne({ _id: id }).exec();
 
     if (!cat) {
       throw new Error('This cat not exists in cat list!');

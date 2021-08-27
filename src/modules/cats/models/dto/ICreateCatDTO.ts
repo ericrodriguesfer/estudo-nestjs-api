@@ -1,6 +1,6 @@
 import { Owner } from 'src/modules/owner/models/schema/owner.schema';
 
-export interface CreateCat {
+export interface ICreateCatDTO {
   name: string;
   age: number;
   owner: Owner | string;
