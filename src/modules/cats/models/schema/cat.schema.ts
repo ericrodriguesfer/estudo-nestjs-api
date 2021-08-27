@@ -1,7 +1,7 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import * as mongoose from 'mongoose';
 import { Document } from 'mongoose';
-import { Owner } from 'src/owner/models/schema/owner.schema';
+import { Owner } from 'src/modules/owner/models/schema/owner.schema';
 
 export type CatDocument = Cat & Document;
 

@@ -3,7 +3,10 @@ import { MongooseModule } from '@nestjs/mongoose';
 import { CatsService } from './service/cats.service';
 import { CatsController } from './controller/cats.controller';
 import { Cat, CatSchema } from './models/schema/cat.schema';
-import { Owner, OwnerSchema } from 'src/owner/models/schema/owner.schema';
+import {
+  Owner,
+  OwnerSchema,
+} from '../../modules/owner/models/schema/owner.schema';
 
 @Module({
   imports: [

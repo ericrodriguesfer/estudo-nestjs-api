@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
-import { Cat, CatDocument } from 'src/cats/models/schema/cat.schema';
+import { Cat, CatDocument } from 'src/modules/cats/models/schema/cat.schema';
 import { CreateOwner } from '../models/dto/ICreateOwnerDTO';
 import { Owner, OwnerDocument } from '../models/schema/owner.schema';
 
