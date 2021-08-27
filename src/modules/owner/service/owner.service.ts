@@ -2,7 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import { Cat, CatDocument } from 'src/modules/cats/models/schema/cat.schema';
-import { CreateOwner } from '../models/dto/ICreateOwnerDTO';
+import { ICreateOwnerDTO } from '../models/dto/ICreateOwnerDTO';
 import { Owner, OwnerDocument } from '../models/schema/owner.schema';
 
 @Injectable()
@@ -12,18 +12,18 @@ export class OwnerService {
     @InjectModel(Cat.name) private catModel: Model<CatDocument>,
   ) {}
 
-  async create(owner: CreateOwner): Promise<CreateOwner> {
+  async create(owner: ICreateOwnerDTO): Promise<ICreateOwnerDTO> {
     const createOwner = await new this.ownerModel(owner);
 
     return await createOwner.save();
   }
 
-  async findAll(): Promise<Array<CreateOwner>> {
+  async findAll(): Promise<Array<ICreateOwnerDTO>> {
     return await this.ownerModel.find().exec();
   }
 
-  async findById(id: string): Promise<CreateOwner> {
-    const owner: CreateOwner = await this.ownerModel
+  async findById(id: string): Promise<ICreateOwnerDTO> {
+    const owner: ICreateOwnerDTO = await this.ownerModel
       .findOne({ _id: id })
       .exec();
 
@@ -34,8 +34,8 @@ export class OwnerService {
     return await this.ownerModel.findById({ _id: id }).exec();
   }
 
-  async update(id: string, owner: CreateOwner): Promise<CreateOwner> {
-    const ownerSearch: CreateOwner = await this.ownerModel
+  async update(id: string, owner: ICreateOwnerDTO): Promise<ICreateOwnerDTO> {
+    const ownerSearch: ICreateOwnerDTO = await this.ownerModel
       .findOne({ _id: id })
       .exec();
 
@@ -43,7 +43,7 @@ export class OwnerService {
       throw new Error('This Owner referenced not exists in list owner!');
     }
 
-    const ownerUpdate: CreateOwner = await this.ownerModel
+    const ownerUpdate: ICreateOwnerDTO = await this.ownerModel
       .findOneAndUpdate(
         { _id: id },
         { name: owner.name, email: owner.email },
@@ -55,7 +55,7 @@ export class OwnerService {
   }
 
   async delete(id: string): Promise<string> {
-    const owner: CreateOwner = await this.ownerModel
+    const owner: ICreateOwnerDTO = await this.ownerModel
       .findOne({ _id: id })
       .exec();
 

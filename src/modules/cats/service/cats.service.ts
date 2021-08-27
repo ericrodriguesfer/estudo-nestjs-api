@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
-import { CreateOwner } from 'src/modules/owner/models/dto/ICreateOwnerDTO';
+import { ICreateOwnerDTO } from 'src/modules/owner/models/dto/ICreateOwnerDTO';
 import {
   Owner,
   OwnerDocument,
@@ -17,7 +17,7 @@ export class CatsService {
   ) {}
 
   async create(cat: CreateCat): Promise<CreateCat> {
-    const ownerCat: CreateOwner = await this.ownerModel
+    const ownerCat: ICreateOwnerDTO = await this.ownerModel
       .findOne({ _id: cat.owner })
       .exec();
 
@@ -44,7 +44,7 @@ export class CatsService {
   }
 
   async findByOwner(id: string): Promise<Array<CreateCat>> {
-    const ownerCat: CreateOwner = await this.ownerModel
+    const ownerCat: ICreateOwnerDTO = await this.ownerModel
       .findOne({ _id: id })
       .exec();
 
