@@ -55,7 +55,7 @@ export class CatsController {
   }
 
   @Delete(':id')
-  async deleteCat(@Param('id') id: string): Promise<string> {
+  async deleteCat(@Param('id') id: string): Promise<boolean> {
     return this.deleteCatService.execute(id);
   }
 }

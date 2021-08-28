@@ -1,6 +1,11 @@
 import { Module } from '@nestjs/common';
 import { MongooseModule } from '@nestjs/mongoose';
-import { CatsService } from './service/cats.service';
+import { CreateCatService } from './service/CreateCat.service';
+import { DeleteCatService } from './service/DeleteCat.service';
+import { ListCatService } from './service/ListCat.service';
+import { ListCatOwnerService } from './service/ListCatOwner.service';
+import { ListCatsService } from './service/ListCats.service';
+import { UpdateCatService } from './service/UpdateCat.service';
 import { CatsController } from './controller/cats.controller';
 import { Cat, CatSchema } from './models/schema/cat.schema';
 import {
@@ -15,7 +20,14 @@ import {
       { name: Owner.name, schema: OwnerSchema },
     ]),
   ],
-  providers: [CatsService],
+  providers: [
+    CreateCatService,
+    DeleteCatService,
+    ListCatService,
+    ListCatOwnerService,
+    ListCatsService,
+    UpdateCatService,
+  ],
   controllers: [CatsController],
 })
 export class CatsModule {}

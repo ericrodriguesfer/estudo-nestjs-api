@@ -2,10 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import { ICreateOwnerDTO } from 'src/modules/owner/models/dto/ICreateOwnerDTO';
-import {
-  Owner,
-  OwnerDocument,
-} from '../../../modules/owner/models/schema/owner.schema';
+import { Owner, OwnerDocument } from '../../owner/models/schema/owner.schema';
 import { ICreateCatDTO } from '../models/dto/ICreateCatDTO';
 import { Cat, CatDocument } from '../models/schema/cat.schema';
 
