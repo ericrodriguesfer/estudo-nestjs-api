@@ -3,7 +3,11 @@ import { MongooseModule } from '@nestjs/mongoose';
 import { Cat, CatSchema } from 'src/modules/cats/models/schema/cat.schema';
 import { OwnerController } from './controller/owner.controller';
 import { Owner, OwnerSchema } from './models/schema/owner.schema';
-import { OwnerService } from './service/owner.service';
+import { CreateOwnerService } from './service/CreateOwner.service';
+import { ListOwnerService } from './service/ListOwner.service';
+import { ListOwnersService } from './service/ListOwners.service';
+import { UpdateOwnerService } from './service/UpdateOwner.service';
+import { DeleteOwnerService } from './service/DeleteOwner.service';
 
 @Module({
   imports: [
@@ -13,6 +17,12 @@ import { OwnerService } from './service/owner.service';
     ]),
   ],
   controllers: [OwnerController],
-  providers: [OwnerService],
+  providers: [
+    CreateOwnerService,
+    ListOwnerService,
+    ListOwnersService,
+    UpdateOwnerService,
+    DeleteOwnerService,
+  ],
 })
 export class OwnerModule {}
