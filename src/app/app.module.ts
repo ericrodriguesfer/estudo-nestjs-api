@@ -6,6 +6,7 @@ import { AppService } from './services/app.service';
 import { UserModule } from 'src/modules/user/user.module';
 import { AuthenticateModule } from 'src/modules/authenticate/authenticate.module';
 import { PetModule } from 'src/modules/pets/pet.module';
+import User from 'src/modules/user/infra/typeorm/entities/User';
 
 @Module({
   imports: [
@@ -17,7 +18,7 @@ import { PetModule } from 'src/modules/pets/pet.module';
       username: process.env.TYPEORM_USERNAME,
       password: process.env.TYPEORM_PASSWORD,
       database: process.env.TYPEORM_DATABASE,
-      entities: [],
+      entities: [User],
     }),
     UserModule,
     AuthenticateModule,
