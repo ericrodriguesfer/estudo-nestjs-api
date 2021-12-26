@@ -1,8 +1,11 @@
 import { Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { AppController } from './app/controller/app.controller';
-import { AppService } from './app/service/app.service';
+import { AppController } from './controllers/app.controller';
+import { AppService } from './services/app.service';
+import { UserModule } from 'src/modules/user/user.module';
+import { AuthenticateModule } from 'src/modules/authenticate/authenticate.module';
+import { PetModule } from 'src/modules/pets/pet.module';
 
 @Module({
   imports: [
@@ -16,6 +19,9 @@ import { AppService } from './app/service/app.service';
       database: process.env.TYPEORM_DATABASE,
       entities: [],
     }),
+    UserModule,
+    AuthenticateModule,
+    PetModule,
   ],
   controllers: [AppController],
   providers: [AppService],
