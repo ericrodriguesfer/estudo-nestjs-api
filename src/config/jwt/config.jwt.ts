@@ -1,2 +1,2 @@
-export const secret = '3f9b2e1933c44582d12641b663eca4c5';
-export const expiresIn = '7d';
+export const secret = process.env.JWT_SECRET_KEY;
+export const expiresIn = process.env.JWT_EXPIRES_IN;
