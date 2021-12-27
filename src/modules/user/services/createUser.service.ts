@@ -6,7 +6,7 @@ import {
 } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
-import ICreateUserDTO from '../dto/ICreateUserDTO';
+import CreateUserDTO from '../dto/CreateUserDTO';
 import User from '../infra/typeorm/entities/User';
 import BCryptHash from '../providers/Hash/implementations/BCryptHash';
 import IHash from '../providers/Hash/contract/IHash';
@@ -23,7 +23,7 @@ class CreateUserService {
     username,
     email,
     password,
-  }: ICreateUserDTO): Promise<User> {
+  }: CreateUserDTO): Promise<User> {
     try {
       const userExistsByEmail: User = await this.userRepository.findOne({
         where: { email },
