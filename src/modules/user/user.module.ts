@@ -6,6 +6,7 @@ import UserController from './infra/http/user.controller';
 import User from './infra/typeorm/entities/User';
 import BCryptHash from './providers/Hash/implementations/BCryptHash';
 import CreateUserService from './services/createUser.service';
+import UpdateUserService from './services/updateUser.service';
 
 @Module({
   imports: [
@@ -16,6 +17,6 @@ import CreateUserService from './services/createUser.service';
     }),
   ],
   controllers: [UserController],
-  providers: [CreateUserService, BCryptHash],
+  providers: [CreateUserService, UpdateUserService, BCryptHash],
 })
 export class UserModule {}
