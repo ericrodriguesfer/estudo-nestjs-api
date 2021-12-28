@@ -38,10 +38,9 @@ export class AppModule implements NestModule {
     consumer
       .apply(EnsureAuthenticatedMiddleware)
       .exclude(
-        { method: RequestMethod.GET, path: 'api' },
         { method: RequestMethod.POST, path: 'api/session' },
         { method: RequestMethod.POST, path: 'api/user' },
-        { method: RequestMethod.PUT, path: 'api/user/:id' },
+        { method: RequestMethod.GET, path: 'api' },
       )
       .forRoutes('*');
   }

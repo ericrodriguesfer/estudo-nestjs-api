@@ -58,8 +58,6 @@ class UpdateUserService {
         password = await this.hashPassword.generateHash(password);
       }
 
-      console.log('opa senha => ', password);
-
       const updateUser: User = await this.userRepository.merge(user, {
         name,
         username,

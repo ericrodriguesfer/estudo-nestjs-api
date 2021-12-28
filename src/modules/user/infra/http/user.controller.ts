@@ -38,15 +38,14 @@ class UserController {
     });
   }
 
-  @Put(':id')
+  @Put()
   @UsePipes(ValidationPipe)
   @UseInterceptors(ClassSerializerInterceptor)
   updateUser(
-    // @Request() request: IRequestUser,
-    @Param('id') id: string,
+    @Request() request: IRequestUser,
     @Body() { name, username, email, password }: UpdateUserDTO,
   ): Promise<User> {
-    return this.updateUserService.execute(id, {
+    return this.updateUserService.execute(request.user.id, {
       name,
       username,
       email,
