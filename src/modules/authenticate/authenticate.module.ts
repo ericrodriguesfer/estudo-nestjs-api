@@ -4,7 +4,7 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { expiresIn, secret } from 'src/config/jwt/config.jwt';
 import User from '../user/infra/typeorm/entities/User';
 import AuthController from './infra/http/auth.controller';
-import BCryptHashPassword from './providers/Hash/implementations/BCryptHash';
+import BCryptHashPassword from './providers/Hash/implementations/BCryptHashPassword';
 import CreateSessionService from './services/createSession.service';
 
 @Module({

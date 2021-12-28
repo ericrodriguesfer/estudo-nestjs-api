@@ -10,8 +10,8 @@ import { InjectRepository } from '@nestjs/typeorm';
 import User from 'src/modules/user/infra/typeorm/entities/User';
 import { Repository } from 'typeorm';
 import CreateSessionDTO from '../dto/CreateSessionDTO';
-import IHashPasswordContract from '../providers/Hash/contract/IHash';
-import BCryptHashPassword from '../providers/Hash/implementations/BCryptHash';
+import IHashPasswordContract from '../providers/Hash/contract/IHashPasswordContract';
+import BCryptHashPassword from '../providers/Hash/implementations/BCryptHashPassword';
 
 @Injectable()
 class CreateSessionService {

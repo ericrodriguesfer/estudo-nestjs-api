@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { compare } from 'bcryptjs';
-import IHashPasswordContract from '../contract/IHash';
+import IHashPasswordContract from '../contract/IHashPasswordContract';
 
 @Injectable()
 class BCryptHashPassword implements IHashPasswordContract {
