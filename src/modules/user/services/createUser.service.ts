@@ -62,6 +62,9 @@ class CreateUserService {
           from: process.env.SENDGRID_EMAIL_FROM,
           subject: process.env.SENDGRID_EMAIL_SUBJECT,
           templateId: process.env.SENDGRID_EMAIL_TEMPLAT_ID,
+          dynamicTemplateData: {
+            name: user.name,
+          },
         })
         .catch((error) => {
           console.log(error.response.body);
