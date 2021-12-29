@@ -1,4 +1,9 @@
-import { Module } from '@nestjs/common';
+import {
+  MiddlewareConsumer,
+  Module,
+  NestModule,
+  RequestMethod,
+} from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { AppController } from './controllers/app.controller';
@@ -6,6 +11,8 @@ import { AppService } from './services/app.service';
 import { UserModule } from 'src/modules/user/user.module';
 import { AuthenticateModule } from 'src/modules/authenticate/authenticate.module';
 import { PetModule } from 'src/modules/pets/pet.module';
+import User from 'src/modules/user/infra/typeorm/entities/User';
+import EnsureAuthenticatedMiddleware from 'src/shared/http/middlewares/authenticated.middleware';
 
 @Module({
   imports: [
@@ -17,7 +24,7 @@ import { PetModule } from 'src/modules/pets/pet.module';
       username: process.env.TYPEORM_USERNAME,
       password: process.env.TYPEORM_PASSWORD,
       database: process.env.TYPEORM_DATABASE,
-      entities: [],
+      entities: [User],
     }),
     UserModule,
     AuthenticateModule,
@@ -26,4 +33,15 @@ import { PetModule } from 'src/modules/pets/pet.module';
   controllers: [AppController],
   providers: [AppService],
 })
-export class AppModule {}
+export class AppModule implements NestModule {
+  configure(consumer: MiddlewareConsumer) {
+    consumer
+      .apply(EnsureAuthenticatedMiddleware)
+      .exclude(
+        { method: RequestMethod.POST, path: 'api/session' },
+        { method: RequestMethod.POST, path: 'api/user' },
+        { method: RequestMethod.GET, path: 'api' },
+      )
+      .forRoutes('*');
+  }
+}
