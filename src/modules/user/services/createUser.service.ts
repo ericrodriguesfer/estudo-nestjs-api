@@ -61,7 +61,7 @@ class CreateUserService {
           to: email,
           from: process.env.SENDGRID_EMAIL_FROM,
           subject: process.env.SENDGRID_EMAIL_SUBJECT,
-          templateId: process.env.SENDGRID_EMAIL_TEMPLAT_ID,
+          templateId: process.env.SENDGRID_EMAIL_TEMPLAT_ID_REGISTER_USER,
           dynamicTemplateData: {
             name: user.name,
           },
