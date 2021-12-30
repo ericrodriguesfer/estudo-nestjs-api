@@ -13,6 +13,7 @@ import { AuthenticateModule } from 'src/modules/authenticate/authenticate.module
 import { PetModule } from 'src/modules/pets/pet.module';
 import User from 'src/modules/user/infra/typeorm/entities/User';
 import EnsureAuthenticatedMiddleware from 'src/shared/http/middlewares/authenticated.middleware';
+import Token from 'src/modules/authenticate/infra/typeorm/entities/Token';
 
 @Module({
   imports: [
@@ -24,7 +25,7 @@ import EnsureAuthenticatedMiddleware from 'src/shared/http/middlewares/authentic
       username: process.env.TYPEORM_USERNAME,
       password: process.env.TYPEORM_PASSWORD,
       database: process.env.TYPEORM_DATABASE,
-      entities: [User],
+      entities: [User, Token],
     }),
     UserModule,
     AuthenticateModule,
@@ -39,6 +40,7 @@ export class AppModule implements NestModule {
       .apply(EnsureAuthenticatedMiddleware)
       .exclude(
         { method: RequestMethod.POST, path: 'api/session' },
+        { method: RequestMethod.POST, path: 'api/session/send-email' },
         { method: RequestMethod.POST, path: 'api/user' },
         { method: RequestMethod.GET, path: 'api' },
       )
