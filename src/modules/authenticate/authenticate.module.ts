@@ -7,6 +7,7 @@ import AuthController from './infra/http/auth.controller';
 import Token from './infra/typeorm/entities/Token';
 import BCryptHashPassword from './providers/Hash/implementations/BCryptHashPassword';
 import CreateSessionService from './services/createSession.service';
+import RedefinePasswordService from './services/redefinePassword.service';
 import SendEmailWithTokenService from './services/sendEmailWithToken.service';
 
 @Module({
@@ -21,6 +22,7 @@ import SendEmailWithTokenService from './services/sendEmailWithToken.service';
   providers: [
     CreateSessionService,
     SendEmailWithTokenService,
+    RedefinePasswordService,
     BCryptHashPassword,
   ],
 })

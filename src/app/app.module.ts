@@ -41,6 +41,7 @@ export class AppModule implements NestModule {
       .exclude(
         { method: RequestMethod.POST, path: 'api/session' },
         { method: RequestMethod.POST, path: 'api/session/send-email' },
+        { method: RequestMethod.POST, path: 'api/session/redefine-password' },
         { method: RequestMethod.POST, path: 'api/user' },
         { method: RequestMethod.GET, path: 'api' },
       )

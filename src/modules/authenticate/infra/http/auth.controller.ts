@@ -7,9 +7,12 @@ import {
   UsePipes,
   ValidationPipe,
 } from '@nestjs/common';
+import User from 'src/modules/user/infra/typeorm/entities/User';
 import CreateSessionDTO from '../../dto/CreateSessionDTO';
+import RedefinePasswordDTO from '../../dto/RedefinePasswordDTO';
 import SendEmailWithTokenDTO from '../../dto/SendEmailWithTokenDTO';
 import CreateSessionService from '../../services/createSession.service';
+import RedefinePasswordService from '../../services/redefinePassword.service';
 import SendEmailWithTokenService from '../../services/sendEmailWithToken.service';
 import Token from '../typeorm/entities/Token';
 
@@ -18,6 +21,7 @@ class AuthController {
   constructor(
     private authenticateUserService: CreateSessionService,
     private sendEmailWithTokenService: SendEmailWithTokenService,
+    private redefinePasswordService: RedefinePasswordService,
   ) {}
 
   @Post()
@@ -34,6 +38,19 @@ class AuthController {
   @UseInterceptors(ClassSerializerInterceptor)
   sendEmailWithToken(@Body() { email }: SendEmailWithTokenDTO): Promise<Token> {
     return this.sendEmailWithTokenService.execute({ email });
+  }
+
+  @Post('redefine-password')
+  @UsePipes(ValidationPipe)
+  @UseInterceptors(ClassSerializerInterceptor)
+  redefinePassword(
+    @Body() { token, password, confirmPassword }: RedefinePasswordDTO,
+  ): Promise<User> {
+    return this.redefinePasswordService.execute({
+      token,
+      password,
+      confirmPassword,
+    });
   }
 }
 
