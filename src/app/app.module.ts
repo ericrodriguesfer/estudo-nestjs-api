@@ -14,6 +14,7 @@ import { PetModule } from 'src/modules/pets/pet.module';
 import User from 'src/modules/user/infra/typeorm/entities/User';
 import EnsureAuthenticatedMiddleware from 'src/shared/http/middlewares/authenticated.middleware';
 import Token from 'src/modules/authenticate/infra/typeorm/entities/Token';
+import { SendGridModule } from '@ntegral/nestjs-sendgrid';
 
 @Module({
   imports: [
@@ -26,6 +27,9 @@ import Token from 'src/modules/authenticate/infra/typeorm/entities/Token';
       password: process.env.TYPEORM_PASSWORD,
       database: process.env.TYPEORM_DATABASE,
       entities: [User, Token],
+    }),
+    SendGridModule.forRoot({
+      apiKey: process.env.SENDGRID_API_KEY,
     }),
     UserModule,
     AuthenticateModule,

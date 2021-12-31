@@ -1,4 +1,5 @@
 import { Module } from '@nestjs/common';
+import { ConfigModule } from '@nestjs/config';
 import { JwtModule } from '@nestjs/jwt';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { expiresIn, secret } from 'src/config/jwt/config.jwt';
@@ -12,6 +13,7 @@ import SendEmailWithTokenService from './services/sendEmailWithToken.service';
 
 @Module({
   imports: [
+    ConfigModule.forRoot(),
     TypeOrmModule.forFeature([User, Token]),
     JwtModule.register({
       secret: secret,
