@@ -47,7 +47,7 @@ class CreateUserService {
         password,
       );
 
-      const user = this.userRepository.create({
+      const user: User = this.userRepository.create({
         name,
         username,
         email,
