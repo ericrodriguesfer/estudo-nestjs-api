@@ -2,7 +2,7 @@ import {
   Body,
   ClassSerializerInterceptor,
   Controller,
-  Param,
+  Get,
   Post,
   Put,
   Request,
@@ -14,6 +14,7 @@ import CreateUserDTO from '../../dto/CreateUserDTO';
 import IRequestUser from '../../dto/IRequestUser';
 import UpdateUserDTO from '../../dto/UpdateUserDTO';
 import CreateUserService from '../../services/createUser.service';
+import GetMeDataService from '../../services/getMeData.service';
 import UpdateUserService from '../../services/updateUser.service';
 import User from '../typeorm/entities/User';
 
@@ -22,7 +23,15 @@ class UserController {
   constructor(
     private createUserService: CreateUserService,
     private updateUserService: UpdateUserService,
+    private getMeDataService: GetMeDataService,
   ) {}
+
+  @Get('me')
+  @UsePipes(ValidationPipe)
+  @UseInterceptors(ClassSerializerInterceptor)
+  getMe(@Request() request: IRequestUser): Promise<User> {
+    return this.getMeDataService.execute({ email: request.user.email });
+  }
 
   @Post()
   @UsePipes(ValidationPipe)
