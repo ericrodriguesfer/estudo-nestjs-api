@@ -2,72 +2,41 @@
   <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo_text.svg" width="320" alt="Nest Logo" /></a>
 </p>
 
-[circleci-image]: https://img.shields.io/circleci/build/github/nestjs/nest/master?token=abc123def456
-[circleci-url]: https://circleci.com/gh/nestjs/nest
+# PROJETO DE ESTUDO DE NESTJS
 
-  <p align="center">A progressive <a href="http://nodejs.org" target="_blank">Node.js</a> framework for building efficient and scalable server-side applications.</p>
-    <p align="center">
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/v/@nestjs/core.svg" alt="NPM Version" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/l/@nestjs/core.svg" alt="Package License" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/dm/@nestjs/common.svg" alt="NPM Downloads" /></a>
-<a href="https://circleci.com/gh/nestjs/nest" target="_blank"><img src="https://img.shields.io/circleci/build/github/nestjs/nest/master" alt="CircleCI" /></a>
-<a href="https://coveralls.io/github/nestjs/nest?branch=master" target="_blank"><img src="https://coveralls.io/repos/github/nestjs/nest/badge.svg?branch=master#9" alt="Coverage" /></a>
-<a href="https://discord.gg/G7Qnnhy" target="_blank"><img src="https://img.shields.io/badge/discord-online-brightgreen.svg" alt="Discord"/></a>
-<a href="https://opencollective.com/nest#backer" target="_blank"><img src="https://opencollective.com/nest/backers/badge.svg" alt="Backers on Open Collective" /></a>
-<a href="https://opencollective.com/nest#sponsor" target="_blank"><img src="https://opencollective.com/nest/sponsors/badge.svg" alt="Sponsors on Open Collective" /></a>
-  <a href="https://paypal.me/kamilmysliwiec" target="_blank"><img src="https://img.shields.io/badge/Donate-PayPal-ff3f59.svg"/></a>
-    <a href="https://opencollective.com/nest#sponsor"  target="_blank"><img src="https://img.shields.io/badge/Support%20us-Open%20Collective-41B883.svg" alt="Support us"></a>
-  <a href="https://twitter.com/nestframework" target="_blank"><img src="https://img.shields.io/twitter/follow/nestframework.svg?style=social&label=Follow"></a>
-</p>
-  <!--[![Backers on Open Collective](https://opencollective.com/nest/backers/badge.svg)](https://opencollective.com/nest#backer)
-  [![Sponsors on Open Collective](https://opencollective.com/nest/sponsors/badge.svg)](https://opencollective.com/nest#sponsor)-->
+##### Projeto em desenvolvimento...
 
-## Description
+## SAIBA MAIS SOBRE O PROJETO
 
-[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
+Esse projeto consiste em um estudo e aprofundamento prático de NestJs, esse projeto inicialmente era o estudo baseado somente no que a documentação no NestJs oferece **[Doc NestJs](https://docs.nestjs.com/)**, onde basicamente foi ensinado a utilizar o básico dos recursos do NestJs com o banco de dados não relacional MongoDB, mas sem aplicar as melhores práticas que o NestJs prega, com isso resolvi pegar o mesmo projeto e o atualizar para um novo propósito, o anterior era basicamente um projeto onde um dono (owner) podia se cadastrar, e com isso ele podia cadastrar seus pets que em geral eram gatos, e listas todos os seus gatos e os atualizar de forma individual, para esse novo projeto foi reestruturado o mesmo completamente desde a estrutura arquitetural do projeto em si, até o banco de dados e o ORM que seria utilizado, hoje o projeto já tem a possibilidade de permitir o cadastro de um usuário na plataforma, o login do mesmo, e atualização do perfil do mesmo, o próximo passo será implementar o módulo de pets, onde permitirá o cadastro de vários pets, e posterior a isso, o módulo de finanças, onde vai permitir cadastrar os gatos tidos com cada pet, para favorecer a possibilidade de criação de estatísticas como: pet que mais gasta, a média de gasto com os pets por períodos e etc, sendo isso o último passo deste projeto de estudo.
 
-## Installation
+## ROADMAP
 
-```bash
-$ npm install
-```
+- [x] Ajustar a estrutura do projeto para o padrão Nest com TypeORM
+- [x] Integrar TypeORM ao projeto
+- [x] Integrar o TypeORM ao PostgreSQL
+- [x] Containerizar o banco de dados PostgreSQL do projeto com Docker (docker-compose)
+- [x] Criar e implementar os módulos de Usuário e Autenticação
+- [x] Implementar a autenticação do usuário
+- [x] Implementar a interceptação de rotas mediante login/auth feito
+- [x] Implementar envio de e-mail mediante algumas ações como: cadastro na plataforma, requisição de token para recuperação de senha e redefinição de senha feita com sucesso
+- [ ] Criar e implementar o módulo de Pets
+- [ ] Criar e implementar o módulo de Finança
 
-## Running the app
+## TECNOLOGIAS QUE FORAM UTILIZADAS NO PROJETO
+* NodeJs
+* ExpressJs
+* NestJs
+* TypeORM
+* Docker
+* SendGrid
+* PostgreSQL
+* Jwt
+* Date fns
+* BCrypt
+* Class Transformer e Class Validator
+* Entre outros
 
-```bash
-# development
-$ npm run start
+## CASO QUEIRA SABER MAIS SOBRE O PROJETO
 
-# watch mode
-$ npm run start:dev
-
-# production mode
-$ npm run start:prod
-```
-
-## Test
-
-```bash
-# unit tests
-$ npm run test
-
-# e2e tests
-$ npm run test:e2e
-
-# test coverage
-$ npm run test:cov
-```
-
-## Support
-
-Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
-
-## Stay in touch
-
-- Author - [Kamil Myśliwiec](https://kamilmysliwiec.com)
-- Website - [https://nestjs.com](https://nestjs.com/)
-- Twitter - [@nestframework](https://twitter.com/nestframework)
-
-## License
-
-Nest is [MIT licensed](LICENSE).
+Pode entrar em contato comigo pelo seguinte email: ericdesenvolvedor7@gmail.com
