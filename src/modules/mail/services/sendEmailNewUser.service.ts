@@ -6,7 +6,7 @@ import ICreateUserDTO from '../dto/ISendEmailCreateUserDTO';
 class SendEmailNewUserService {
   constructor(private mailer: MailerService) {}
 
-  async execute({ user }: ICreateUserDTO) {
+  async execute({ user }: ICreateUserDTO): Promise<void> {
     await this.mailer
       .sendMail({
         to: user.email,

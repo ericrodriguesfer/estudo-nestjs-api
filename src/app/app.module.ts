@@ -15,7 +15,6 @@ import User from 'src/modules/user/infra/typeorm/entities/User';
 import EnsureAuthenticatedMiddleware from 'src/shared/http/middlewares/authenticated.middleware';
 import Token from 'src/modules/authenticate/infra/typeorm/entities/Token';
 import { SendGridModule } from '@ntegral/nestjs-sendgrid';
-import { MailModule } from 'src/modules/mail/mail.module';
 
 @Module({
   imports: [
@@ -35,7 +34,6 @@ import { MailModule } from 'src/modules/mail/mail.module';
     UserModule,
     AuthenticateModule,
     PetModule,
-    MailModule,
   ],
   controllers: [AppController],
   providers: [AppService],

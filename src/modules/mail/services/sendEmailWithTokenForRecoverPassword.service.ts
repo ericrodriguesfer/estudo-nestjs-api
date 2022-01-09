@@ -6,7 +6,7 @@ import ISendEmailWithTokenDTO from '../dto/ISendEmailWithTokenDTO';
 class SendEmailWithTokenForRecoverPasswordService {
   constructor(private mailer: MailerService) {}
 
-  async execute({ user, token }: ISendEmailWithTokenDTO) {
+  async execute({ user, token }: ISendEmailWithTokenDTO): Promise<void> {
     await this.mailer
       .sendMail({
         to: user.email,

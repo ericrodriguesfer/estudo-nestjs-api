@@ -6,7 +6,7 @@ import ISendEmailConfirmPasswordDTO from '../dto/ISendEmailConfirmPasswordDTO';
 class SendEmailConfirmRecoverPasswordService {
   constructor(private mailer: MailerService) {}
 
-  async execute({ user }: ISendEmailConfirmPasswordDTO) {
+  async execute({ user }: ISendEmailConfirmPasswordDTO): Promise<void> {
     await this.mailer
       .sendMail({
         to: user.email,
