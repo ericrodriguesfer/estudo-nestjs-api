@@ -3,6 +3,7 @@ import { ConfigModule } from '@nestjs/config';
 import { JwtModule } from '@nestjs/jwt';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { expiresIn, secret } from 'src/config/jwt/config.jwt';
+import { MailModule } from '../mail/mail.module';
 import User from '../user/infra/typeorm/entities/User';
 import AuthController from './infra/http/auth.controller';
 import Token from './infra/typeorm/entities/Token';
@@ -15,6 +16,7 @@ import SendEmailWithTokenService from './services/sendEmailWithToken.service';
   imports: [
     ConfigModule.forRoot(),
     TypeOrmModule.forFeature([User, Token]),
+    MailModule,
     JwtModule.register({
       secret: secret,
       signOptions: { expiresIn: expiresIn },

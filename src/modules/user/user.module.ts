@@ -1,6 +1,7 @@
 import { Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
+import { MailModule } from '../mail/mail.module';
 import UserController from './infra/http/user.controller';
 import User from './infra/typeorm/entities/User';
 import BCryptHash from './providers/Hash/implementations/BCryptHash';
@@ -9,7 +10,11 @@ import GetMeDataService from './services/getMeData.service';
 import UpdateUserService from './services/updateUser.service';
 
 @Module({
-  imports: [ConfigModule.forRoot(), TypeOrmModule.forFeature([User])],
+  imports: [
+    ConfigModule.forRoot(),
+    TypeOrmModule.forFeature([User]),
+    MailModule,
+  ],
   controllers: [UserController],
   providers: [
     CreateUserService,
