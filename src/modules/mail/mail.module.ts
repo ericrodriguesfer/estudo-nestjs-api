@@ -3,6 +3,7 @@ import { HandlebarsAdapter } from '@nestjs-modules/mailer/dist/adapters/handleba
 import { Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
 import { join } from 'path';
+import SendEmailConfirmRecoverPasswordService from './services/sendEmailConfirmRecoverPassword.service';
 import SendEmailNewUserService from './services/sendEmailNewUser.service';
 import SendEmailWithTokenForRecoverPasswordService from './services/sendEmailWithTokenForRecoverPassword.service';
 
@@ -36,10 +37,12 @@ import SendEmailWithTokenForRecoverPasswordService from './services/sendEmailWit
   providers: [
     SendEmailNewUserService,
     SendEmailWithTokenForRecoverPasswordService,
+    SendEmailConfirmRecoverPasswordService,
   ],
   exports: [
     SendEmailNewUserService,
     SendEmailWithTokenForRecoverPasswordService,
+    SendEmailConfirmRecoverPasswordService,
   ],
 })
 export class MailModule {}

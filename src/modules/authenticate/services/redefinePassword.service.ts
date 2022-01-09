@@ -14,6 +14,7 @@ import RedefinePasswordDTO from '../dto/RedefinePasswordDTO';
 import Token from '../infra/typeorm/entities/Token';
 import BCryptHashPassword from '../providers/Hash/implementations/BCryptHashPassword';
 import IHashPasswordContract from '../providers/Hash/contract/IHashPasswordContract';
+import SendEmailConfirmRecoverPasswordService from 'src/modules/mail/services/sendEmailConfirmRecoverPassword.service';
 
 @Injectable()
 class RedefinePasswordService {
@@ -23,6 +24,7 @@ class RedefinePasswordService {
     @InjectSendGrid() private readonly sendGrid: SendGridService,
     @Inject(BCryptHashPassword)
     private readonly hashPassword: IHashPasswordContract,
+    private mail: SendEmailConfirmRecoverPasswordService,
   ) {}
 
   async execute({
@@ -104,19 +106,21 @@ class RedefinePasswordService {
       await this.userRepository.save(updatedUser);
       await this.tokenRepository.save(updatedToken);
 
-      await this.sendGrid
-        .send({
-          to: user.email,
-          from: process.env.SENDGRID_EMAIL_FROM,
-          subject: process.env.SENDGRID_EMAIL_SUBJECT,
-          templateId:
-            process.env
-              .SENDGRID_EMAIL_TEMPLAT_ID_CONFIRM_SUCCESSFLY_REDEFINE_PASSWORD,
-          dynamicTemplateData: {
-            name: user.name,
-          },
-        })
-        .catch((error) => console.log(error.response.body));
+      // await this.sendGrid
+      //   .send({
+      //     to: user.email,
+      //     from: process.env.SENDGRID_EMAIL_FROM,
+      //     subject: process.env.SENDGRID_EMAIL_SUBJECT,
+      //     templateId:
+      //       process.env
+      //         .SENDGRID_EMAIL_TEMPLAT_ID_CONFIRM_SUCCESSFLY_REDEFINE_PASSWORD,
+      //     dynamicTemplateData: {
+      //       name: user.name,
+      //     },
+      //   })
+      //   .catch((error) => console.log(error.response.body));
+
+      await this.mail.execute({ user });
 
       return updatedUser;
     } catch (error) {
