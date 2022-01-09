@@ -1,0 +1,93 @@
+<div class="body-email">
+    <center>
+        <div class="mail">
+            <div class="header-mail">
+                <div class="img">
+                    <img src="https://seeklogo.com/images/N/nestjs-logo-09342F76C0-seeklogo.com.png" />
+                </div>
+                <div class="text">
+                    <h1>Recover Password</h1>
+                </div>
+            </div>
+            <div class="body-mail">
+                <p><b>{{name}}</b>, you requested to reset your password.</p>
+                <p class="text-info">Your recovery code is:</p>
+            </div>
+            <div class="code">
+                <p><b>{{token}}</b></p>
+            </div>
+            <div class="footer-mail">
+                <hr class="divider">
+                <p>Learn more about the developer of this application:</p>
+                <p><a href="https://github.com/ericrodriguesfer" target="_blank">Eric Rodrigues - GitHub</a></p>
+                <p><a href="https://www.linkedin.com/in/ericrodriguesfer/" target="_blank">Eric Rodrigues - Linkedin</a></p>
+                <p>Thanks for the support.</p>
+                <hr class="divider-2">
+            </div>
+        </div>
+    </center>
+</div>
+
+
+<style>
+    @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@100;400&display=swap');
+
+    * {
+        margin: 0;
+        padding: 0;
+        font-family: 'Roboto', sans-serif;
+    }
+
+    .body-email {
+        background-color: #c5c7c9;
+        color: #000000;
+    }
+
+    .mail {
+        width: 55%;
+        background-color: #FFFFFF;
+    }
+
+    .header-mail .img img {
+        width: 120px;
+        height: 120px;
+        margin-top: 35px;
+        margin-bottom: 35px;
+    }
+
+    .header-mail .text {
+        margin-bottom: 10px;
+    }
+
+    .body-mail {
+        margin-bottom: 35px;
+    }
+
+    .body-email .text-info {
+        margin-top: 25px;
+    }
+
+    .footer-mail {
+        width: 45%;
+        margin-top: 35px;
+        border: 1px solid #c5c7c9;
+    }
+
+    .divider {
+        margin-bottom: 15px;
+        border: 1px solid #c5c6c7;
+    }
+    
+    .divider-2 {
+        margin-top: 15px;
+        border: 1px solid #c5c6c7;
+    }
+
+    .code {
+        width: 45%;
+        border: 1px solid #FF0000;
+        border-radius: 8px;
+        margin-top: 15px;
+        font-size: 15px;
+    }
+</style>

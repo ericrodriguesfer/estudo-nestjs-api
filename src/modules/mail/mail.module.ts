@@ -4,6 +4,7 @@ import { Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
 import { join } from 'path';
 import SendEmailNewUserService from './services/sendEmailNewUser.service';
+import SendEmailWithTokenForRecoverPasswordService from './services/sendEmailWithTokenForRecoverPassword.service';
 
 @Module({
   imports: [
@@ -32,7 +33,13 @@ import SendEmailNewUserService from './services/sendEmailNewUser.service';
     }),
   ],
   controllers: [],
-  providers: [SendEmailNewUserService],
-  exports: [SendEmailNewUserService],
+  providers: [
+    SendEmailNewUserService,
+    SendEmailWithTokenForRecoverPasswordService,
+  ],
+  exports: [
+    SendEmailNewUserService,
+    SendEmailWithTokenForRecoverPasswordService,
+  ],
 })
 export class MailModule {}
