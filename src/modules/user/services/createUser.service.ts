@@ -11,6 +11,7 @@ import User from '../infra/typeorm/entities/User';
 import BCryptHash from '../providers/Hash/implementations/BCryptHash';
 import IHash from '../providers/Hash/contract/IHash';
 import { InjectSendGrid, SendGridService } from '@ntegral/nestjs-sendgrid';
+import SendEmailNewUserService from 'src/modules/mail/services/sendEmailNewUser.service';
 
 @Injectable()
 class CreateUserService {
@@ -18,6 +19,7 @@ class CreateUserService {
     @InjectRepository(User) private userRepository: Repository<User>,
     @Inject(BCryptHash) private readonly hashPassword: IHash,
     @InjectSendGrid() private readonly sendGrid: SendGridService,
+    private mail: SendEmailNewUserService,
   ) {}
 
   async execute({
@@ -56,19 +58,21 @@ class CreateUserService {
 
       await this.userRepository.save(user);
 
-      await this.sendGrid
-        .send({
-          to: email,
-          from: process.env.SENDGRID_EMAIL_FROM,
-          subject: process.env.SENDGRID_EMAIL_SUBJECT,
-          templateId: process.env.SENDGRID_EMAIL_TEMPLAT_ID_REGISTER_USER,
-          dynamicTemplateData: {
-            name: user.name,
-          },
-        })
-        .catch((error) => {
-          console.log(error.response.body);
-        });
+      // await this.sendGrid
+      //   .send({
+      //     to: email,
+      //     from: process.env.SENDGRID_EMAIL_FROM,
+      //     subject: process.env.SENDGRID_EMAIL_SUBJECT,
+      //     templateId: process.env.SENDGRID_EMAIL_TEMPLAT_ID_REGISTER_USER,
+      //     dynamicTemplateData: {
+      //       name: user.name,
+      //     },
+      //   })
+      //   .catch((error) => {
+      //     console.log(error.response.body);
+      //   });
+
+      await this.mail.execute({ user });
 
       return user;
     } catch (error) {
