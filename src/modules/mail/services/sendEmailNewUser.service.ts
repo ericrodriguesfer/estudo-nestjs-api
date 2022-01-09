@@ -11,7 +11,7 @@ class SendEmailNewUserService {
       .sendMail({
         to: user.email,
         from: 'No reply this email please' + process.env.MAIL_FROM,
-        subject: 'wellcome a nestjs application api',
+        subject: 'Wellcome a nestjs application api',
         template: 'create',
         context: {
           name: user.name,
