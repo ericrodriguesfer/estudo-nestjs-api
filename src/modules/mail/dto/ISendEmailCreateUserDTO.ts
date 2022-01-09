@@ -1,7 +1,7 @@
 import User from 'src/modules/user/infra/typeorm/entities/User';
 
-interface ICreateUserDTO {
+interface ISendEmailCreateUserDTO {
   user: User;
 }
 
-export default ICreateUserDTO;
+export default ISendEmailCreateUserDTO;

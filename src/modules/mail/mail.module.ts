@@ -33,7 +33,6 @@ import SendEmailWithTokenForRecoverPasswordService from './services/sendEmailWit
       }),
     }),
   ],
-  controllers: [],
   providers: [
     SendEmailNewUserService,
     SendEmailWithTokenForRecoverPasswordService,
