@@ -20,8 +20,10 @@ Esse projeto consiste em um estudo e aprofundamento prático de NestJs, esse pro
 - [x] Implementar a autenticação do usuário
 - [x] Implementar a interceptação de rotas mediante login/auth feito
 - [x] Implementar envio de e-mail mediante algumas ações como: cadastro de novo usuário na plataforma, requisição de token para recuperação de senha e redefinição de senha feita com sucesso
+- [x] Documentar o projeto ao menos de forma básica com [Swagger](https://swagger.io/)
 - [ ] Criar e implementar o módulo de Pets
 - [ ] Criar e implementar o módulo de Finança
+- [ ] Melhorar a documentação do [Swagger](https://swagger.io/) ajustando a parte de auth na documentação do projeto
 
 ## FEATURES
 
@@ -58,6 +60,7 @@ E um grande diferencial do NodeMailer ao SendGrid é que o mesmo é gratuito, o 
 * Handlebars
 * PostgreSQL
 * Jwt
+* Swagger
 * Date fns
 * BCrypt
 * Class Transformer e Class Validator
