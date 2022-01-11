@@ -10,6 +10,7 @@ import {
   UsePipes,
   ValidationPipe,
 } from '@nestjs/common';
+import { ApiBearerAuth, ApiBody } from '@nestjs/swagger';
 import CreateUserDTO from '../../dto/CreateUserDTO';
 import IRequestUser from '../../dto/IRequestUser';
 import UpdateUserDTO from '../../dto/UpdateUserDTO';
@@ -29,6 +30,7 @@ class UserController {
   @Get('me')
   @UsePipes(ValidationPipe)
   @UseInterceptors(ClassSerializerInterceptor)
+  @ApiBearerAuth()
   getMe(@Request() request: IRequestUser): Promise<User> {
     return this.getMeDataService.execute({ email: request.user.email });
   }
@@ -36,6 +38,7 @@ class UserController {
   @Post()
   @UsePipes(ValidationPipe)
   @UseInterceptors(ClassSerializerInterceptor)
+  @ApiBody({ type: CreateUserDTO })
   createUser(
     @Body() { name, username, email, password }: CreateUserDTO,
   ): Promise<User> {
@@ -50,6 +53,8 @@ class UserController {
   @Put()
   @UsePipes(ValidationPipe)
   @UseInterceptors(ClassSerializerInterceptor)
+  @ApiBody({ type: UpdateUserDTO })
+  @ApiBearerAuth()
   updateUser(
     @Request() request: IRequestUser,
     @Body() { name, username, email, password }: UpdateUserDTO,

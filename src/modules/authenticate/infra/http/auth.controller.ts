@@ -7,6 +7,7 @@ import {
   UsePipes,
   ValidationPipe,
 } from '@nestjs/common';
+import { ApiBody } from '@nestjs/swagger';
 import User from 'src/modules/user/infra/typeorm/entities/User';
 import CreateSessionDTO from '../../dto/CreateSessionDTO';
 import RedefinePasswordDTO from '../../dto/RedefinePasswordDTO';
@@ -27,6 +28,7 @@ class AuthController {
   @Post()
   @UsePipes(ValidationPipe)
   @UseInterceptors(ClassSerializerInterceptor)
+  @ApiBody({ type: CreateSessionDTO })
   createSession(
     @Body() { email, password }: CreateSessionDTO,
   ): Promise<string> {
@@ -36,6 +38,7 @@ class AuthController {
   @Post('send-email')
   @UsePipes(ValidationPipe)
   @UseInterceptors(ClassSerializerInterceptor)
+  @ApiBody({ type: SendEmailWithTokenDTO })
   sendEmailWithToken(@Body() { email }: SendEmailWithTokenDTO): Promise<Token> {
     return this.sendEmailWithTokenService.execute({ email });
   }
@@ -43,6 +46,7 @@ class AuthController {
   @Post('redefine-password')
   @UsePipes(ValidationPipe)
   @UseInterceptors(ClassSerializerInterceptor)
+  @ApiBody({ type: RedefinePasswordDTO })
   redefinePassword(
     @Body() { token, password, confirmPassword }: RedefinePasswordDTO,
   ): Promise<User> {
