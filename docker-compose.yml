@@ -1,15 +1,26 @@
 version: '3'
 
 services:
+  api:
+    container_name: 'nest-api'
+    build: .
+    ports:
+      - ${API_PORT}:${API_PORT}
+    volumes:
+      - .:/home/api
+    environment:
+      - TYPEORM_HOST=database
+      - TYPEORM_PORT=5432
+
   database:
     container_name: 'api-nest'
     image: 'postgres:13-alpine'
     environment:
-      - POSTGRES_USER=postgres
-      - POSTGRES_PASSWORD=postgres
-      - POSTGRES_DB=api-nest-study
+      - POSTGRES_USER=${TYPEORM_USERNAME}
+      - POSTGRES_PASSWORD=${TYPEORM_PASSWORD}
+      - POSTGRES_DB=${TYPEORM_DATABASE}
     volumes:
       - ./postgres_data:/var/lib/postgresql/data
     ports:
-      - '5432:5432'
+      - ${TYPEORM_PORT}:5432
     restart: unless-stopped
