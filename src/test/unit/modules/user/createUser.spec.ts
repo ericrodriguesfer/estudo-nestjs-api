@@ -1,9 +1,9 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { getRepositoryToken } from '@nestjs/typeorm';
-import CreateUserService from '../../../../modules/user/services/createUser.service';
-import User from '../../../../modules/user/infra/typeorm/entities/User';
-import SendEmailNewUserService from '../../../../modules/mail/services/sendEmailNewUser.service';
-import BCryptHash from '../../../../modules/user/providers/Hash/implementations/BCryptHash';
+import CreateUserService from '../../../../../src/modules/user/services/createUser.service';
+import User from '../../../../../src/modules/user/infra/typeorm/entities/User';
+import SendEmailNewUserService from '../../../../../src/modules/mail/services/sendEmailNewUser.service';
+import BCryptHash from '../../../../../src/modules/user/providers/Hash/implementations/BCryptHash';
 import {
   userRepositoryMockup,
   hashPasswordMockup,
