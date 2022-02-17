@@ -1,10 +1,10 @@
 import { Test, TestingModule } from '@nestjs/testing';
+import { getRepositoryToken } from '@nestjs/typeorm';
+import { Repository } from 'typeorm';
 import CreateUserService from '../../../../modules/user/services/createUser.service';
 import User from '../../../../modules/user/infra/typeorm/entities/User';
-import { getRepositoryToken } from '@nestjs/typeorm';
 import SendEmailNewUserService from '../../../../modules/mail/services/sendEmailNewUser.service';
 import BCryptHash from '../../../../modules/user/providers/Hash/implementations/BCryptHash';
-import { Repository } from 'typeorm';
 import {
   userRepositoryMockup,
   hashPasswordMockup,
