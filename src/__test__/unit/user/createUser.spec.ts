@@ -40,9 +40,7 @@ describe('Testing the functions of create users', () => {
     userRepositoryMockup.findOne = jest.fn();
     userRepositoryMockup.create = jest.fn();
     userRepositoryMockup.save = jest.fn();
-    mailerMockup.execute = jest
-      .fn()
-      .mockImplementation(() => Promise.resolve());
+    mailerMockup.execute = jest.fn().mockImplementation();
     hashPasswordMockup.generateHash = jest
       .fn()
       .mockReturnValue(

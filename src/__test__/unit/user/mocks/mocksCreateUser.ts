@@ -5,7 +5,7 @@ const userRepositoryMockup = {
 };
 
 const mailerMockup = {
-  execute: jest.fn().mockImplementation(() => Promise.resolve()),
+  execute: jest.fn().mockImplementation(),
 };
 
 const hashPasswordMockup = {
