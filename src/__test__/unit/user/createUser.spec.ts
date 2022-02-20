@@ -37,17 +37,7 @@ describe('Testing the functions of create users', () => {
   });
 
   afterEach(async () => {
-    userRepositoryMockup.findOne = jest.fn();
-    userRepositoryMockup.create = jest.fn();
-    userRepositoryMockup.save = jest.fn();
-    mailerMockup.execute = jest.fn().mockImplementation();
-    hashPasswordMockup.generateHash = jest
-      .fn()
-      .mockReturnValue(
-        Promise.resolve(
-          '$2a$12$ef9HJafpDSQ13XnxrpuU.Og9O43rbuOnUlFMn6MAU3M2qa0DsQQYi',
-        ),
-      );
+    jest.clearAllMocks();
   });
 
   it('Should be able defined create user service', async () => {
