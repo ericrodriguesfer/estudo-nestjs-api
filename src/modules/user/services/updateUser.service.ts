@@ -30,7 +30,7 @@ class UpdateUserService {
         throw new NotFoundException('This user does not exists in database');
       }
 
-      if (user.email !== email) {
+      if (email && user.email !== email) {
         const userExistsByEmail: User = await this.userRepository.findOne({
           where: { email },
         });
@@ -42,7 +42,7 @@ class UpdateUserService {
         }
       }
 
-      if (user.username !== username) {
+      if (username && user.username !== username) {
         const userExistsByUserName: User = await this.userRepository.findOne({
           where: { username },
         });
