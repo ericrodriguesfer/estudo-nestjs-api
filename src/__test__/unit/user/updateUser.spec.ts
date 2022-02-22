@@ -90,10 +90,7 @@ describe('Testing the functions of update users', () => {
   });
 
   it('Should be able update a user with just the modified email and valid', async () => {
-    const userUpdateInputMock: Omit<
-      User,
-      'id' | 'name' | 'username' | 'password' | 'created_at' | 'updated_at'
-    > = {
+    const userUpdateInputMock: Pick<User, 'email'> = {
       email: 'usertest2@gmail.com',
     };
 
@@ -164,10 +161,7 @@ describe('Testing the functions of update users', () => {
   });
 
   it('Should not be able update a user with just the modified invalid email', async () => {
-    const userUpdateInputMock: Omit<
-      User,
-      'id' | 'name' | 'username' | 'password' | 'created_at' | 'updated_at'
-    > = {
+    const userUpdateInputMock: Pick<User, 'email'> = {
       email: 'usertest2@gmail.com',
     };
 
@@ -208,10 +202,7 @@ describe('Testing the functions of update users', () => {
   });
 
   it('Should not be able update a user with just the modified invalid username', async () => {
-    const userUpdateInputMock: Omit<
-      User,
-      'id' | 'name' | 'email' | 'password' | 'created_at' | 'updated_at'
-    > = {
+    const userUpdateInputMock: Pick<User, 'username'> = {
       username: 'usertest2',
     };
 
@@ -321,10 +312,7 @@ describe('Testing the functions of update users', () => {
   });
 
   it('Should be able update a user with just the modified password', async () => {
-    const userUpdateInputMock: Omit<
-      User,
-      'id' | 'name' | 'email' | 'username' | 'created_at' | 'updated_at'
-    > = {
+    const userUpdateInputMock: Pick<User, 'password'> = {
       password: '123qwe',
     };
 
