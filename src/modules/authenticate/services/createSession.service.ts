@@ -7,7 +7,7 @@ import {
 } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import { InjectRepository } from '@nestjs/typeorm';
-import User from 'src/modules/user/infra/typeorm/entities/User';
+import User from '../../../modules/user/infra/typeorm/entities/User';
 import { Repository } from 'typeorm';
 import CreateSessionDTO from '../dto/CreateSessionDTO';
 import IHashPasswordContract from '../providers/Hash/contract/IHashPasswordContract';
