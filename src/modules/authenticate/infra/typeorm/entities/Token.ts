@@ -1,5 +1,5 @@
 import { Exclude } from 'class-transformer';
-import User from 'src/modules/user/infra/typeorm/entities/User';
+import User from '../../../../../modules/user/infra/typeorm/entities/User';
 import {
   Column,
   CreateDateColumn,
