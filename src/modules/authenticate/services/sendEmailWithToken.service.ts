@@ -4,20 +4,18 @@ import {
   NotFoundException,
 } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { InjectSendGrid, SendGridService } from '@ntegral/nestjs-sendgrid';
-import User from 'src/modules/user/infra/typeorm/entities/User';
+import User from '../../../modules/user/infra/typeorm/entities/User';
 import { Repository } from 'typeorm';
 import { addDays } from 'date-fns';
 import SendEmailWithTokenDTO from '../dto/SendEmailWithTokenDTO';
 import Token from '../infra/typeorm/entities/Token';
-import SendEmailWithTokenForRecoverPasswordService from 'src/modules/mail/services/sendEmailWithTokenForRecoverPassword.service';
+import SendEmailWithTokenForRecoverPasswordService from '../../../modules/mail/services/sendEmailWithTokenForRecoverPassword.service';
 
 @Injectable()
 class SendEmailWithTokenService {
   constructor(
     @InjectRepository(User) private userRepository: Repository<User>,
     @InjectRepository(Token) private tokenRepository: Repository<Token>,
-    @InjectSendGrid() private readonly sendGrid: SendGridService,
     private mail: SendEmailWithTokenForRecoverPasswordService,
   ) {}
 
@@ -39,19 +37,6 @@ class SendEmailWithTokenService {
       });
 
       await this.tokenRepository.save(token);
-
-      // await this.sendGrid
-      //   .send({
-      //     to: email,
-      //     from: process.env.SENDGRID_EMAIL_FROM,
-      //     subject: process.env.SENDGRID_EMAIL_SUBJECT,
-      //     templateId: process.env.SENDGRID_EMAIL_TEMPLAT_ID_RECOVER_PASSWORD,
-      //     dynamicTemplateData: {
-      //       name: user.name,
-      //       token: token.token,
-      //     },
-      //   })
-      //   .catch((error) => console.log(error.response.body));
 
       await this.mail.execute({ user, token: token.token });
 

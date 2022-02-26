@@ -6,22 +6,20 @@ import {
   UnauthorizedException,
 } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { InjectSendGrid, SendGridService } from '@ntegral/nestjs-sendgrid';
-import User from 'src/modules/user/infra/typeorm/entities/User';
+import User from '../../../modules/user/infra/typeorm/entities/User';
 import { Repository } from 'typeorm';
 import { isAfter } from 'date-fns';
 import RedefinePasswordDTO from '../dto/RedefinePasswordDTO';
 import Token from '../infra/typeorm/entities/Token';
 import BCryptHashPassword from '../providers/Hash/implementations/BCryptHashPassword';
 import IHashPasswordContract from '../providers/Hash/contract/IHashPasswordContract';
-import SendEmailConfirmRecoverPasswordService from 'src/modules/mail/services/sendEmailConfirmRecoverPassword.service';
+import SendEmailConfirmRecoverPasswordService from '../../../modules/mail/services/sendEmailConfirmRecoverPassword.service';
 
 @Injectable()
 class RedefinePasswordService {
   constructor(
     @InjectRepository(User) private userRepository: Repository<User>,
     @InjectRepository(Token) private tokenRepository: Repository<Token>,
-    @InjectSendGrid() private readonly sendGrid: SendGridService,
     @Inject(BCryptHashPassword)
     private readonly hashPassword: IHashPasswordContract,
     private mail: SendEmailConfirmRecoverPasswordService,
@@ -105,20 +103,6 @@ class RedefinePasswordService {
 
       await this.userRepository.save(updatedUser);
       await this.tokenRepository.save(updatedToken);
-
-      // await this.sendGrid
-      //   .send({
-      //     to: user.email,
-      //     from: process.env.SENDGRID_EMAIL_FROM,
-      //     subject: process.env.SENDGRID_EMAIL_SUBJECT,
-      //     templateId:
-      //       process.env
-      //         .SENDGRID_EMAIL_TEMPLAT_ID_CONFIRM_SUCCESSFLY_REDEFINE_PASSWORD,
-      //     dynamicTemplateData: {
-      //       name: user.name,
-      //     },
-      //   })
-      //   .catch((error) => console.log(error.response.body));
 
       await this.mail.execute({ user });
 
