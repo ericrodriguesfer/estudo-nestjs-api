@@ -6,15 +6,17 @@ import {
 } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { AppController } from './controllers/app.controller';
-import { AppService } from './services/app.service';
-import { UserModule } from 'src/modules/user/user.module';
+import { SendGridModule } from '@ntegral/nestjs-sendgrid';
 import { AuthenticateModule } from 'src/modules/authenticate/authenticate.module';
+import Token from 'src/modules/authenticate/infra/typeorm/entities/Token';
+import Breed from 'src/modules/pets/infra/typeorm/entities/Breed';
+import Pet from 'src/modules/pets/infra/typeorm/entities/Pet';
 import { PetModule } from 'src/modules/pets/pet.module';
 import User from 'src/modules/user/infra/typeorm/entities/User';
+import { UserModule } from 'src/modules/user/user.module';
 import EnsureAuthenticatedMiddleware from 'src/shared/http/middlewares/authenticated.middleware';
-import Token from 'src/modules/authenticate/infra/typeorm/entities/Token';
-import { SendGridModule } from '@ntegral/nestjs-sendgrid';
+import { AppController } from './controllers/app.controller';
+import { AppService } from './services/app.service';
 
 @Module({
   imports: [
@@ -26,7 +28,7 @@ import { SendGridModule } from '@ntegral/nestjs-sendgrid';
       username: process.env.TYPEORM_USERNAME,
       password: process.env.TYPEORM_PASSWORD,
       database: process.env.TYPEORM_DATABASE,
-      entities: [User, Token],
+      entities: [User, Token, Breed, Pet],
     }),
     SendGridModule.forRoot({
       apiKey: process.env.SENDGRID_API_KEY,
