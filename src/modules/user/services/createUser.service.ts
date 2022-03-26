@@ -6,11 +6,11 @@ import {
 } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
+import SendEmailNewUserService from '../../mail/services/sendEmailNewUser.service';
 import CreateUserDTO from '../dto/CreateUserDTO';
 import User from '../infra/typeorm/entities/User';
-import BCryptHash from '../providers/Hash/implementations/BCryptHash';
 import IHash from '../providers/Hash/contract/IHash';
-import SendEmailNewUserService from '../../mail/services/sendEmailNewUser.service';
+import BCryptHash from '../providers/Hash/implementations/BCryptHash';
 
 @Injectable()
 class CreateUserService {
@@ -25,6 +25,7 @@ class CreateUserService {
     username,
     email,
     password,
+    phone,
   }: CreateUserDTO): Promise<User> {
     try {
       const userExistsByEmail: User = await this.userRepository.findOne({
@@ -43,6 +44,16 @@ class CreateUserService {
         throw new ConflictException('This username is in usage for other user');
       }
 
+      const userExistsByPhoneNumber: User = await this.userRepository.findOne({
+        where: { phone },
+      });
+
+      if (userExistsByPhoneNumber) {
+        throw new ConflictException(
+          'This phone number is in usage for other user',
+        );
+      }
+
       const passwordHash: string = await this.hashPassword.generateHash(
         password,
       );
@@ -52,6 +63,7 @@ class CreateUserService {
         username,
         email,
         password: passwordHash,
+        phone,
       });
 
       await this.userRepository.save(user);

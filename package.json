@@ -38,12 +38,14 @@
     "dotenv": "^10.0.0",
     "handlebars": "^4.7.7",
     "jsonwebtoken": "^8.5.1",
+    "nestjs-twilio": "^2.1.0",
     "nodemailer": "^6.7.2",
     "pg": "^8.7.1",
     "reflect-metadata": "^0.1.13",
     "rimraf": "^3.0.2",
     "rxjs": "^7",
     "swagger-ui-express": "^4.3.0",
+    "twilio": "^3.76.0",
     "typeorm": "^0.2.41"
   },
   "devDependencies": {

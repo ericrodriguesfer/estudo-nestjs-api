@@ -30,6 +30,13 @@ class CreateUserDTO {
   })
   @ApiProperty()
   password: string;
+
+  @IsString({ message: 'This phone variable need to be string' })
+  @IsNotEmpty({ message: 'This phone variable can not empty' })
+  // @Matches(/^1(\d{13})$/, {
+  //   message: 'Your phone number must follow the format',
+  // })
+  phone: string;
 }
 
 export default CreateUserDTO;

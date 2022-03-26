@@ -21,7 +21,7 @@ class UpdateUserService {
 
   async execute(
     id: string,
-    { name, username, email, password }: UpdateUserDTO,
+    { name, username, email, password, phone }: UpdateUserDTO,
   ): Promise<User> {
     try {
       const user: User = await this.userRepository.findOne({ where: { id } });
@@ -54,6 +54,20 @@ class UpdateUserService {
         }
       }
 
+      if (phone && user.phone !== phone) {
+        const userExistsByPhoneNumber: User = await this.userRepository.findOne(
+          {
+            where: { phone },
+          },
+        );
+
+        if (userExistsByPhoneNumber) {
+          throw new UnauthorizedException(
+            'This phone number is in usage for other user',
+          );
+        }
+      }
+
       if (password) {
         password = await this.hashPassword.generateHash(password);
       }
@@ -63,6 +77,7 @@ class UpdateUserService {
         username,
         email,
         password,
+        phone,
       });
 
       await this.userRepository.save(updateUser);
