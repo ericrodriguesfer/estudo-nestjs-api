@@ -9,6 +9,7 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { SendGridModule } from '@ntegral/nestjs-sendgrid';
 import { AuthenticateModule } from 'src/modules/authenticate/authenticate.module';
 import Token from 'src/modules/authenticate/infra/typeorm/entities/Token';
+import { MessagesModule } from 'src/modules/messages/messages.module';
 import Breed from 'src/modules/pets/infra/typeorm/entities/Breed';
 import Pet from 'src/modules/pets/infra/typeorm/entities/Pet';
 import { PetModule } from 'src/modules/pets/pet.module';
@@ -36,6 +37,7 @@ import { AppService } from './services/app.service';
     UserModule,
     AuthenticateModule,
     PetModule,
+    MessagesModule,
   ],
   controllers: [AppController],
   providers: [AppService],
@@ -47,6 +49,7 @@ export class AppModule implements NestModule {
       .exclude(
         { method: RequestMethod.POST, path: 'api/session' },
         { method: RequestMethod.POST, path: 'api/session/send-email' },
+        { method: RequestMethod.POST, path: 'api/session/send-sms' },
         { method: RequestMethod.POST, path: 'api/session/redefine-password' },
         { method: RequestMethod.POST, path: 'api/user' },
         { method: RequestMethod.GET, path: 'api' },

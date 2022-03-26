@@ -25,6 +25,9 @@ class User {
   @Column()
   password: string;
 
+  @Column()
+  phone: string;
+
   @Exclude()
   @CreateDateColumn({ type: 'timestamp' })
   created_at: Date;

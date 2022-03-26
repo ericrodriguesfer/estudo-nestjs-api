@@ -5,24 +5,24 @@ import {
 } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { addDays } from 'date-fns';
+import SendSMSWithTokenForRecoverPasswordService from 'src/modules/messages/services/sendSMSWithTokenForRecoverPassword.service';
 import { Repository } from 'typeorm';
-import SendEmailWithTokenForRecoverPasswordService from '../../../modules/mail/services/sendEmailWithTokenForRecoverPassword.service';
-import User from '../../../modules/user/infra/typeorm/entities/User';
-import SendEmailWithTokenDTO from '../dto/SendEmailWithTokenDTO';
+import User from '../../user/infra/typeorm/entities/User';
+import SendSMSWithTokenDTO from '../dto/SendSMSWithTokenDTO';
 import Token from '../infra/typeorm/entities/Token';
 
 @Injectable()
-class SendEmailWithTokenService {
+class SendSMSWithTokenService {
   constructor(
     @InjectRepository(User) private userRepository: Repository<User>,
     @InjectRepository(Token) private tokenRepository: Repository<Token>,
-    private mail: SendEmailWithTokenForRecoverPasswordService,
+    private sms: SendSMSWithTokenForRecoverPasswordService,
   ) {}
 
-  async execute({ email }: SendEmailWithTokenDTO): Promise<Token> {
+  async execute({ phone }: SendSMSWithTokenDTO): Promise<Token> {
     try {
       const user: User = await this.userRepository.findOne({
-        where: { email },
+        where: { phone },
       });
 
       if (!user) {
@@ -35,7 +35,7 @@ class SendEmailWithTokenService {
       });
 
       if (lastToken && !lastToken.used && lastToken.used_in === null) {
-        await this.mail.execute({ user, token: lastToken.token });
+        await this.sms.execute({ user, token: lastToken.token });
 
         return lastToken;
       } else {
@@ -48,7 +48,7 @@ class SendEmailWithTokenService {
 
         await this.tokenRepository.save(token);
 
-        await this.mail.execute({ user, token: token.token });
+        await this.sms.execute({ user, token: token.token });
 
         return token;
       }
@@ -61,4 +61,4 @@ class SendEmailWithTokenService {
   }
 }
 
-export default SendEmailWithTokenService;
+export default SendSMSWithTokenService;

@@ -40,6 +40,15 @@ class UpdateUserDTO {
   @IsOptional()
   @ApiPropertyOptional()
   password?: string;
+
+  @IsString({ message: 'This phone variable need to be string' })
+  @IsNotEmpty({ message: 'This phone variable can not empty' })
+  // @Matches(/^1(\d{13})$/, {
+  //   message: 'Your phone number must follow the format',
+  // })
+  @IsOptional()
+  @ApiPropertyOptional()
+  phone: string;
 }
 
 export default UpdateUserDTO;
