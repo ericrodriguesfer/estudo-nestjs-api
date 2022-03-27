@@ -6,14 +6,15 @@ import {
   UnauthorizedException,
 } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import User from '../../../modules/user/infra/typeorm/entities/User';
-import { Repository } from 'typeorm';
 import { isAfter } from 'date-fns';
+import SendSMSConfirmRecoverPasswordService from 'src/modules/messages/services/sendSMSConfirmRecoverPassword.service';
+import { Repository } from 'typeorm';
+import SendEmailConfirmRecoverPasswordService from '../../../modules/mail/services/sendEmailConfirmRecoverPassword.service';
+import User from '../../../modules/user/infra/typeorm/entities/User';
 import RedefinePasswordDTO from '../dto/RedefinePasswordDTO';
 import Token from '../infra/typeorm/entities/Token';
-import BCryptHashPassword from '../providers/Hash/implementations/BCryptHashPassword';
 import IHashPasswordContract from '../providers/Hash/contract/IHashPasswordContract';
-import SendEmailConfirmRecoverPasswordService from '../../../modules/mail/services/sendEmailConfirmRecoverPassword.service';
+import BCryptHashPassword from '../providers/Hash/implementations/BCryptHashPassword';
 
 @Injectable()
 class RedefinePasswordService {
@@ -23,6 +24,7 @@ class RedefinePasswordService {
     @Inject(BCryptHashPassword)
     private readonly hashPassword: IHashPasswordContract,
     private mail: SendEmailConfirmRecoverPasswordService,
+    private sms: SendSMSConfirmRecoverPasswordService,
   ) {}
 
   async execute({
@@ -105,6 +107,7 @@ class RedefinePasswordService {
       await this.tokenRepository.save(updatedToken);
 
       await this.mail.execute({ user });
+      await this.sms.execute({ user });
 
       return updatedUser;
     } catch (error) {

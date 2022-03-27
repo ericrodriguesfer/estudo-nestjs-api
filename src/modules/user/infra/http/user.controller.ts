@@ -40,13 +40,14 @@ class UserController {
   @UseInterceptors(ClassSerializerInterceptor)
   @ApiBody({ type: CreateUserDTO })
   createUser(
-    @Body() { name, username, email, password }: CreateUserDTO,
+    @Body() { name, username, email, password, phone }: CreateUserDTO,
   ): Promise<User> {
     return this.createUserService.execute({
       name,
       username,
       email,
       password,
+      phone,
     });
   }
 
@@ -57,13 +58,14 @@ class UserController {
   @ApiBearerAuth()
   updateUser(
     @Request() request: IRequestUser,
-    @Body() { name, username, email, password }: UpdateUserDTO,
+    @Body() { name, username, email, password, phone }: UpdateUserDTO,
   ): Promise<User> {
     return this.updateUserService.execute(request.user.id, {
       name,
       username,
       email,
       password,
+      phone,
     });
   }
 }

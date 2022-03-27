@@ -5,6 +5,7 @@ import {
   IsOptional,
   IsString,
   Length,
+  Matches,
 } from 'class-validator';
 
 class UpdateUserDTO {
@@ -40,6 +41,18 @@ class UpdateUserDTO {
   @IsOptional()
   @ApiPropertyOptional()
   password?: string;
+
+  @IsString({ message: 'This phone variable need to be string' })
+  @IsNotEmpty({ message: 'This phone variable can not empty' })
+  @Matches(
+    /^((\+|00)(55)\s?)(\(?([1-9][0-9])\)?\s?)(?:((?:9\d|[2-9])\d{4})(\d{4}))$/,
+    {
+      message: 'Your phone number must follow the format +55XX9XXXXXXXX',
+    },
+  )
+  @IsOptional()
+  @ApiPropertyOptional()
+  phone: string;
 }
 
 export default UpdateUserDTO;

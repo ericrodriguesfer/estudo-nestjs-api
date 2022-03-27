@@ -1,14 +1,18 @@
 import { Exclude } from 'class-transformer';
+import User from 'src/modules/user/infra/typeorm/entities/User';
 import {
   Column,
   CreateDateColumn,
   Entity,
+  JoinColumn,
+  OneToMany,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
 
-@Entity('user')
-class User {
+@Entity('breed')
+class Breed {
+  @Exclude()
   @PrimaryGeneratedColumn('uuid')
   id: string;
 
@@ -16,17 +20,7 @@ class User {
   name: string;
 
   @Column()
-  username: string;
-
-  @Column()
-  email: string;
-
-  @Exclude()
-  @Column()
-  password: string;
-
-  @Column()
-  phone: string;
+  breed_id: string;
 
   @Exclude()
   @CreateDateColumn({ type: 'timestamp' })
@@ -35,6 +29,10 @@ class User {
   @Exclude()
   @UpdateDateColumn({ type: 'timestamp' })
   updated_at: Date;
+
+  @JoinColumn({ name: 'user_id' })
+  @OneToMany(() => User, (user) => user.id)
+  user: User;
 }
 
-export default User;
+export default Breed;
