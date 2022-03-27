@@ -1,5 +1,11 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { IsEmail, IsNotEmpty, IsString, Length } from 'class-validator';
+import {
+  IsEmail,
+  IsNotEmpty,
+  IsString,
+  Length,
+  Matches,
+} from 'class-validator';
 
 class CreateUserDTO {
   @IsString({ message: 'This name variable need to be string' })
@@ -33,9 +39,12 @@ class CreateUserDTO {
 
   @IsString({ message: 'This phone variable need to be string' })
   @IsNotEmpty({ message: 'This phone variable can not empty' })
-  // @Matches(/^1(\d{13})$/, {
-  //   message: 'Your phone number must follow the format',
-  // })
+  @Matches(
+    /^((\+|00)(55)\s?)(\(?([1-9][0-9])\)?\s?)(?:((?:9\d|[2-9])\d{4})(\d{4}))$/,
+    {
+      message: 'Your phone number must follow the format +55XX9XXXXXXXX',
+    },
+  )
   phone: string;
 }
 
