@@ -20,7 +20,7 @@ class Breed {
   name: string;
 
   @Column()
-  breed_id: string;
+  user_id: string;
 
   @Exclude()
   @CreateDateColumn({ type: 'timestamp' })
