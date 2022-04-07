@@ -55,7 +55,7 @@ class CreatePetService {
 
         await this.breedRepository.save(breedCreated);
 
-        const pet: Pet = await this.petRepository.create({
+        const pet: Pet = this.petRepository.create({
           name,
           age,
           breed_id: breedCreated.id,
@@ -66,7 +66,7 @@ class CreatePetService {
 
         return pet;
       } else {
-        const pet: Pet = await this.petRepository.create({
+        const pet: Pet = this.petRepository.create({
           name,
           age,
           breed_id: existsBreed.id,

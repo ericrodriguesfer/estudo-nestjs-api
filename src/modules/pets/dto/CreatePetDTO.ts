@@ -7,8 +7,8 @@ class CreatePetDTO {
   @ApiProperty()
   name: string;
 
-  @IsInt({ message: 'This number variable need to be int' })
-  @IsNotEmpty({ message: 'This name variable can not empty' })
+  @IsInt({ message: 'This age variable need to be int' })
+  @IsNotEmpty({ message: 'This age variable can not empty' })
   @ApiProperty()
   age: number;
 
