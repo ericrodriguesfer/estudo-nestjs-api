@@ -7,6 +7,8 @@ import Breed from './infra/typeorm/entities/Breed';
 import Pet from './infra/typeorm/entities/Pet';
 import SetNameBreedToCapitalize from './providers/BreedNameToCapitalize/SetNameBreedToCapitalize';
 import CreatePetService from './services/createPet.service';
+import ListAllBreedService from './services/listAllBreed.service';
+import ListPetOfBreedService from './services/listPetOfBreed.service';
 
 @Module({
   imports: [
@@ -14,6 +16,11 @@ import CreatePetService from './services/createPet.service';
     TypeOrmModule.forFeature([User, Breed, Pet]),
   ],
   controllers: [PetController],
-  providers: [CreatePetService, SetNameBreedToCapitalize],
+  providers: [
+    CreatePetService,
+    ListAllBreedService,
+    ListPetOfBreedService,
+    SetNameBreedToCapitalize,
+  ],
 })
 export class PetModule {}

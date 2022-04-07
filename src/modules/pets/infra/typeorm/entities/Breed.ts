@@ -12,7 +12,6 @@ import {
 
 @Entity('breed')
 class Breed {
-  @Exclude()
   @PrimaryGeneratedColumn('uuid')
   id: string;
 
