@@ -2,6 +2,7 @@ import {
   Body,
   ClassSerializerInterceptor,
   Controller,
+  Delete,
   Get,
   Param,
   Post,
@@ -13,8 +14,11 @@ import {
 import { ApiBody } from '@nestjs/swagger';
 import IRequestUser from 'src/modules/user/dto/IRequestUser';
 import CreatePetDTO from '../../dto/CreatePetDTO';
+import IResponseBreed from '../../dto/IResponseBreed';
 import CreatePetService from '../../services/createPet.service';
+import DeleteBreedService from '../../services/deleteBreed.service';
 import ListAllBreedService from '../../services/listAllBreed.service';
+import ListAllPetService from '../../services/listAllPet.service';
 import ListPetOfBreedService from '../../services/listPetOfBreed.service';
 import Breed from '../typeorm/entities/Breed';
 import Pet from '../typeorm/entities/Pet';
@@ -24,8 +28,17 @@ class PetController {
   constructor(
     private createPetService: CreatePetService,
     private listAllBreedsService: ListAllBreedService,
-    private listAllPetOfBreed: ListPetOfBreedService,
+    private listAllPetOfBreedService: ListPetOfBreedService,
+    private deleteBreedService: DeleteBreedService,
+    private listAllPetService: ListAllPetService,
   ) {}
+
+  @Get()
+  @UsePipes(ValidationPipe)
+  @UseInterceptors(ClassSerializerInterceptor)
+  getAllPets(@Request() request: IRequestUser): Promise<Array<Pet>> {
+    return this.listAllPetService.execute(request.user.id);
+  }
 
   @Get('breeds')
   @UsePipes(ValidationPipe)
@@ -41,7 +54,17 @@ class PetController {
     @Request() request: IRequestUser,
     @Param('id') id: string,
   ): Promise<Array<Breed>> {
-    return this.listAllPetOfBreed.execute(request.user.id, id);
+    return this.listAllPetOfBreedService.execute(request.user.id, id);
+  }
+
+  @Delete('breed/:id')
+  @UsePipes(ValidationPipe)
+  @UseInterceptors(ClassSerializerInterceptor)
+  deleteBreed(
+    @Request() request: IRequestUser,
+    @Param('id') id: string,
+  ): Promise<IResponseBreed> {
+    return this.deleteBreedService.execute(request.user.id, id);
   }
 
   @Post()

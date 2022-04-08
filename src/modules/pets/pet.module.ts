@@ -7,7 +7,9 @@ import Breed from './infra/typeorm/entities/Breed';
 import Pet from './infra/typeorm/entities/Pet';
 import SetNameBreedToCapitalize from './providers/BreedNameToCapitalize/SetNameBreedToCapitalize';
 import CreatePetService from './services/createPet.service';
+import DeleteBreedService from './services/deleteBreed.service';
 import ListAllBreedService from './services/listAllBreed.service';
+import ListAllPetService from './services/listAllPet.service';
 import ListPetOfBreedService from './services/listPetOfBreed.service';
 
 @Module({
@@ -20,6 +22,8 @@ import ListPetOfBreedService from './services/listPetOfBreed.service';
     CreatePetService,
     ListAllBreedService,
     ListPetOfBreedService,
+    DeleteBreedService,
+    ListAllPetService,
     SetNameBreedToCapitalize,
   ],
 })
