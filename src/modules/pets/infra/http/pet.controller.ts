@@ -6,6 +6,7 @@ import {
   Get,
   Param,
   Post,
+  Put,
   Request,
   UseInterceptors,
   UsePipes,
@@ -15,11 +16,16 @@ import { ApiBody } from '@nestjs/swagger';
 import IRequestUser from 'src/modules/user/dto/IRequestUser';
 import CreatePetDTO from '../../dto/CreatePetDTO';
 import IResponseBreed from '../../dto/IResponseBreed';
+import IResponsePet from '../../dto/IResponsePet';
+import UpdatedPetDTO from '../../dto/UpdatedPetDTO';
 import CreatePetService from '../../services/createPet.service';
 import DeleteBreedService from '../../services/deleteBreed.service';
+import DeletePetService from '../../services/deletePet.service';
 import ListAllBreedService from '../../services/listAllBreed.service';
 import ListAllPetService from '../../services/listAllPet.service';
 import ListPetOfBreedService from '../../services/listPetOfBreed.service';
+import UpdateBreedService from '../../services/updateBreed.service';
+import UpdatePetService from '../../services/updatePet.service';
 import Breed from '../typeorm/entities/Breed';
 import Pet from '../typeorm/entities/Pet';
 
@@ -31,6 +37,9 @@ class PetController {
     private listAllPetOfBreedService: ListPetOfBreedService,
     private deleteBreedService: DeleteBreedService,
     private listAllPetService: ListAllPetService,
+    private updateBreedService: UpdateBreedService,
+    private updatePetService: UpdatePetService,
+    private deletePetService: DeletePetService,
   ) {}
 
   @Get()
@@ -57,6 +66,21 @@ class PetController {
     return this.listAllPetOfBreedService.execute(request.user.id, id);
   }
 
+  @Put('breed/:id')
+  @UsePipes(ValidationPipe)
+  @UseInterceptors(ClassSerializerInterceptor)
+  updateBreed(
+    @Request() request: IRequestUser,
+    @Param('id') id: string,
+    @Body('name') name: string,
+  ): Promise<Breed> {
+    return this.updateBreedService.execute({
+      idUser: request.user.id,
+      idBreed: id,
+      name,
+    });
+  }
+
   @Delete('breed/:id')
   @UsePipes(ValidationPipe)
   @UseInterceptors(ClassSerializerInterceptor)
@@ -76,6 +100,27 @@ class PetController {
     @Body() { name, age, breed }: CreatePetDTO,
   ): Promise<Pet> {
     return this.createPetService.execute(request.user.id, { name, age, breed });
+  }
+
+  @Put(':id')
+  @UsePipes(ValidationPipe)
+  @UseInterceptors(ClassSerializerInterceptor)
+  updatePet(
+    @Request() request: IRequestUser,
+    @Param('id') id: string,
+    @Body() pet: UpdatedPetDTO,
+  ): Promise<Pet> {
+    return this.updatePetService.execute(request.user.id, id, pet);
+  }
+
+  @Delete(':id')
+  @UsePipes(ValidationPipe)
+  @UseInterceptors(ClassSerializerInterceptor)
+  deletePet(
+    @Request() request: IRequestUser,
+    @Param('id') id: string,
+  ): Promise<IResponsePet> {
+    return this.deletePetService.execute(request.user.id, id);
   }
 }
 

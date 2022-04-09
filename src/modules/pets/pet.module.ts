@@ -8,9 +8,12 @@ import Pet from './infra/typeorm/entities/Pet';
 import SetNameBreedToCapitalize from './providers/BreedNameToCapitalize/SetNameBreedToCapitalize';
 import CreatePetService from './services/createPet.service';
 import DeleteBreedService from './services/deleteBreed.service';
+import DeletePetService from './services/deletePet.service';
 import ListAllBreedService from './services/listAllBreed.service';
 import ListAllPetService from './services/listAllPet.service';
 import ListPetOfBreedService from './services/listPetOfBreed.service';
+import UpdateBreedService from './services/updateBreed.service';
+import UpdatePetService from './services/updatePet.service';
 
 @Module({
   imports: [
@@ -24,6 +27,9 @@ import ListPetOfBreedService from './services/listPetOfBreed.service';
     ListPetOfBreedService,
     DeleteBreedService,
     ListAllPetService,
+    UpdateBreedService,
+    DeletePetService,
+    UpdatePetService,
     SetNameBreedToCapitalize,
   ],
 })
