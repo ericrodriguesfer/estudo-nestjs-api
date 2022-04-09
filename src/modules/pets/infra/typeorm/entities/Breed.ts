@@ -12,7 +12,6 @@ import {
 
 @Entity('breed')
 class Breed {
-  @Exclude()
   @PrimaryGeneratedColumn('uuid')
   id: string;
 
@@ -20,7 +19,7 @@ class Breed {
   name: string;
 
   @Column()
-  breed_id: string;
+  user_id: string;
 
   @Exclude()
   @CreateDateColumn({ type: 'timestamp' })

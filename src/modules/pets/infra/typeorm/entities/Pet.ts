@@ -13,7 +13,6 @@ import Breed from './Breed';
 
 @Entity('pet')
 class Pet {
-  @Exclude()
   @PrimaryGeneratedColumn('uuid')
   id: string;
 
