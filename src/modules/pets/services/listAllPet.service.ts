@@ -4,6 +4,11 @@ import {
   NotFoundException,
 } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
+import {
+  IPaginationOptions,
+  paginate,
+  Pagination,
+} from 'nestjs-typeorm-paginate';
 import User from 'src/modules/user/infra/typeorm/entities/User';
 import { Repository } from 'typeorm';
 import Breed from '../infra/typeorm/entities/Breed';
@@ -17,7 +22,10 @@ class ListAllPetService {
     @InjectRepository(Breed) private breedRepository: Repository<Breed>,
   ) {}
 
-  async execute(id: string): Promise<Array<Pet>> {
+  async execute(
+    id: string,
+    { page, limit }: IPaginationOptions,
+  ): Promise<Pagination<Pet>> {
     try {
       const userExists: User = await this.userRepository.findOne({
         where: { id },
@@ -27,18 +35,28 @@ class ListAllPetService {
         throw new NotFoundException('The user of this requisition not found');
       }
 
-      const pets: Array<Pet> = await this.petRepository.find({
-        where: { user_id: userExists.id },
-      });
+      const results = await paginate<Pet>(
+        this.petRepository
+          .createQueryBuilder('Pet')
+          .where('Pet.user_id = :id', { id: userExists.id }),
+        {
+          page,
+          limit,
+        },
+      );
 
-      return await Promise.all(
-        pets.map(async (pet: Pet) => {
-          pet.breed = await this.breedRepository.findOne({
-            where: { id: pet.breed_id },
-          });
+      return new Pagination(
+        await Promise.all(
+          results.items.map(async (pet: Pet) => {
+            pet.breed = await this.breedRepository.findOne({
+              where: { id: pet.breed_id },
+            });
 
-          return pet;
-        }),
+            return pet;
+          }),
+        ),
+        results.meta,
+        results.links,
       );
     } catch (error) {
       if (error) throw error;

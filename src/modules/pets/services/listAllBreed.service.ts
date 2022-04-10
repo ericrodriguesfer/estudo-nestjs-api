@@ -4,6 +4,11 @@ import {
   NotFoundException,
 } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
+import {
+  IPaginationOptions,
+  paginate,
+  Pagination,
+} from 'nestjs-typeorm-paginate';
 import User from 'src/modules/user/infra/typeorm/entities/User';
 import { Repository } from 'typeorm';
 import Breed from '../infra/typeorm/entities/Breed';
@@ -15,7 +20,10 @@ class ListAllBreedService {
     @InjectRepository(User) private userRepository: Repository<User>,
   ) {}
 
-  async execute(id: string): Promise<Array<Breed>> {
+  async execute(
+    id: string,
+    { page, limit }: IPaginationOptions,
+  ): Promise<Pagination<Breed>> {
     try {
       const existsUser: User = await this.userRepository.findOne({
         where: { id },
@@ -27,11 +35,12 @@ class ListAllBreedService {
         );
       }
 
-      const breeds: Array<Breed> = await this.breedRepository.find({
-        where: { user_id: existsUser.id },
-      });
-
-      return breeds;
+      return await paginate<Breed>(
+        this.breedRepository
+          .createQueryBuilder('Breed')
+          .where('Breed.user_id = :id', { id: existsUser.id }),
+        { page, limit },
+      );
     } catch (error) {
       if (error) throw error;
       throw new InternalServerErrorException(

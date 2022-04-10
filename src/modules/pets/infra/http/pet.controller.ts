@@ -2,17 +2,21 @@ import {
   Body,
   ClassSerializerInterceptor,
   Controller,
+  DefaultValuePipe,
   Delete,
   Get,
   Param,
+  ParseIntPipe,
   Post,
   Put,
+  Query,
   Request,
   UseInterceptors,
   UsePipes,
   ValidationPipe,
 } from '@nestjs/common';
 import { ApiBody } from '@nestjs/swagger';
+import { Pagination } from 'nestjs-typeorm-paginate';
 import IRequestUser from 'src/modules/user/dto/IRequestUser';
 import CreatePetDTO from '../../dto/CreatePetDTO';
 import IResponseBreed from '../../dto/IResponseBreed';
@@ -45,15 +49,25 @@ class PetController {
   @Get()
   @UsePipes(ValidationPipe)
   @UseInterceptors(ClassSerializerInterceptor)
-  getAllPets(@Request() request: IRequestUser): Promise<Array<Pet>> {
-    return this.listAllPetService.execute(request.user.id);
+  getAllPets(
+    @Request() request: IRequestUser,
+    @Query('page', new DefaultValuePipe(1), ParseIntPipe) page = 1,
+    @Query('limit', new DefaultValuePipe(5), ParseIntPipe) limit = 5,
+  ): Promise<Pagination<Pet>> {
+    limit = limit > 10 ? 10 : limit;
+    return this.listAllPetService.execute(request.user.id, { page, limit });
   }
 
   @Get('breeds')
   @UsePipes(ValidationPipe)
   @UseInterceptors(ClassSerializerInterceptor)
-  getAllBreeds(@Request() request: IRequestUser): Promise<Array<Breed>> {
-    return this.listAllBreedsService.execute(request.user.id);
+  getAllBreeds(
+    @Request() request: IRequestUser,
+    @Query('page', new DefaultValuePipe(1), ParseIntPipe) page = 1,
+    @Query('limit', new DefaultValuePipe(5), ParseIntPipe) limit = 5,
+  ): Promise<Pagination<Breed>> {
+    limit = limit > 10 ? 10 : limit;
+    return this.listAllBreedsService.execute(request.user.id, { page, limit });
   }
 
   @Get('breed/:id')
@@ -62,8 +76,14 @@ class PetController {
   getAllPetOfBreed(
     @Request() request: IRequestUser,
     @Param('id') id: string,
-  ): Promise<Array<Breed>> {
-    return this.listAllPetOfBreedService.execute(request.user.id, id);
+    @Query('page', new DefaultValuePipe(1), ParseIntPipe) page = 1,
+    @Query('limit', new DefaultValuePipe(5), ParseIntPipe) limit = 5,
+  ): Promise<Pagination<Breed>> {
+    limit = limit > 10 ? 10 : limit;
+    return this.listAllPetOfBreedService.execute(request.user.id, id, {
+      page,
+      limit,
+    });
   }
 
   @Put('breed/:id')
