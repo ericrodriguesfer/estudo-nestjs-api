@@ -5050,6 +5050,11 @@ nestjs-twilio@^2.1.0:
   resolved "https://registry.yarnpkg.com/nestjs-twilio/-/nestjs-twilio-2.1.0.tgz#d4ce8c8b6fd37dee31aa829d4f1ff5786e5d68e3"
   integrity sha512-bmocIsmZ9qrkXqWDDXV2vcDOh9NtUijC3yZmTcQ7P+3jrBq4akspoenmaRQL/r6pwTtPvPyILVZLVRx0ZlrVIg==
 
+nestjs-typeorm-paginate@^3.2.0-alpha:
+  version "3.2.0-alpha"
+  resolved "https://registry.yarnpkg.com/nestjs-typeorm-paginate/-/nestjs-typeorm-paginate-3.2.0-alpha.tgz#709230a72ab1e97234004c91be309c3ca521d3dc"
+  integrity sha512-AiGT0SvYS7QmITouga8YEK8EKne1uTfDg1pBo2D3m0kFOTPynwf0FYiGaeDd3x7K6T8NPF2c6l4WyHRoVAgb8Q==
+
 netmask@^2.0.1:
   version "2.0.2"
   resolved "https://registry.yarnpkg.com/netmask/-/netmask-2.0.2.tgz#8b01a07644065d536383835823bc52004ebac5e7"

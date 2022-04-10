@@ -3,6 +3,11 @@ import {
   NotFoundException,
 } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
+import {
+  IPaginationOptions,
+  paginate,
+  Pagination,
+} from 'nestjs-typeorm-paginate';
 import User from 'src/modules/user/infra/typeorm/entities/User';
 import { Repository } from 'typeorm';
 import Breed from '../infra/typeorm/entities/Breed';
@@ -15,7 +20,11 @@ class ListPetOfBreedService {
     @InjectRepository(Pet) private petRepository: Repository<Pet>,
   ) {}
 
-  async execute(id: string, idBreed: string): Promise<Array<Pet>> {
+  async execute(
+    id: string,
+    idBreed: string,
+    { page, limit }: IPaginationOptions,
+  ): Promise<Pagination<Pet>> {
     try {
       const existsUser: User = await this.userRepository.findOne({
         where: { id },
@@ -28,7 +37,7 @@ class ListPetOfBreedService {
       }
 
       const existsBreed: Breed = await this.breedRepository.findOne({
-        where: { id: idBreed },
+        where: { id: idBreed, user_id: existsUser.id },
       });
 
       if (!existsBreed) {
@@ -37,11 +46,12 @@ class ListPetOfBreedService {
         );
       }
 
-      const pets: Array<Pet> = await this.petRepository.find({
-        where: { breed_id: existsBreed.id },
-      });
-
-      return pets;
+      return await paginate<Pet>(
+        this.petRepository
+          .createQueryBuilder('Pet')
+          .where('Pet.breed_id = :id', { id: existsBreed.id }),
+        { page, limit },
+      );
     } catch (error) {
       if (error) throw error;
       throw new InternalServerErrorException(
