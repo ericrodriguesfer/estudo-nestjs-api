@@ -12,34 +12,47 @@ Esse projeto consiste em um estudo e aprofundamento prático de NestJs, esse pro
 
 ## ROADMAP
 
-- [x] Ajustar a estrutura do projeto para o padrão Nest com TypeORM
-- [x] Integrar TypeORM ao projeto
-- [x] Integrar o TypeORM ao PostgreSQL
-- [x] Containerizar o banco de dados PostgreSQL do projeto com Docker (docker-compose)
-- [x] Criar e implementar os módulos de Usuário e Autenticação
-- [x] Implementar a autenticação do usuário
-- [x] Implementar a interceptação de rotas mediante login/auth feito
-- [x] Implementar envio de e-mail mediante algumas ações como: cadastro de novo usuário na plataforma, requisição de token para recuperação de senha e redefinição de senha feita com sucesso
-- [x] Documentar o projeto ao menos de forma básica com [Swagger](https://swagger.io/)
-- [ ] Criar e implementar o módulo de Pets
-- [ ] Criar e implementar o módulo de Finança
-- [ ] Melhorar a documentação do [Swagger](https://swagger.io/) ajustando a parte de auth na documentação do projeto
+- [x] Ajustar a estrutura do projeto para o padrão Nest com TypeORM.
+- [x] Integrar TypeORM ao projeto.
+- [x] Integrar o TypeORM ao PostgreSQL.
+- [x] Containerizar o banco de dados PostgreSQL do projeto com Docker (docker-compose).
+- [x] Criar e implementar os módulos de Usuário e Autenticação.
+- [x] Implementar a autenticação do usuário.
+- [x] Implementar a interceptação de rotas mediante login/auth feito.
+- [x] Implementar envio de e-mail mediante algumas ações como: cadastro de novo usuário na plataforma, requisição de token para recuperação de senha e redefinição de senha feita com sucesso.
+- [x] Implementar o envio de sms mediante algumas ações como: requisição de token para recuperação de senha e redefinição de senha de acesso, e sms de notificação quando o perfil do usuário é atualizado.
+- [x] Documentar o projeto ao menos de forma básica com [Swagger](https://swagger.io/).
+- [x] Criar e implementar o módulo de Pets.
+- [ ] Criar e implementar o módulo de Finança.
+- [ ] Melhorar a documentação do [Swagger](https://swagger.io/) ajustando a parte de auth na documentação do projeto.
+- [x] Implementar paginação dos resultados nas rotas/endpoints de método GET.
 
 ## FEATURES
 
-* Usuário
+* Usuários:
 
-  * Se cadastrar na plataforma
-    * **OBS:** *É enviado um email para o email de registro deste dado usuário informando/confirmando que ele se registrou na plataforma*
-  * Atualizar os próprios dados
-  * Solicitar a listagem de seus dados
-  * Logar na plataforma/Criar uma sessão de acesso
+  * Se cadastrar na plataforma:
+    * **OBS:** *É enviado um email para o email de registro deste dado usuário informando/confirmando que ele se registrou na plataforma.*
+  * Atualizar os próprios dados.
+  * Solicitar a listagem de seus dados.
+  * Logar na plataforma/Criar uma sessão de acesso.
   * Solicitar a recuperação de senha:
 
-    * Solicitar o envio de um token para recuperação
+    * Solicitar o envio de um token para recuperação de senha (pode solicitar por e-mail ou sms):
       * **OBS:** *É enviado um email para o email de registro deste dado usuário contendo o token que ele usará para redefinir sua senha perdida*
+      * **OBS:** *É enviado um sms para o número de telefone de registro deste dado usuário contendo o token que ele usará para redefinir sua senha perdida*
     * Alterar sua senha com o token em posse
-      * **OBS:** *É enviado um email para o email de registro deste dado usuário informando/confirmando que a senha dele foi redefinida com sucesso*
+      * **OBS:** *É enviado um email para o email, e um sms para o número de telefone de registro deste dado usuário informando/confirmando que a senha dele foi redefinida com sucesso*
+  
+* Pets:
+
+  * Cadastrar seus pets:
+     
+    * CRUD de um pet:
+      * **OBS:** *Ao ir realizar o cadastro deu um pet com suas devidas informações (nome e idade), também é repassado junto com o mesmo a raça do pet em forma de string, caso seja uma raça que já esteja cadastrada no banco de dados, apenas referenciamos este novo pet a ela, caso não, a criamos no banco de dados e após isso criamos o pet o referenciando com a sua raça que foi recem cadastrada.*
+      * **OBS:** *A raça de um pet não pode ser editada, somente nome e idade de forma opcional.*
+    * CRUD de uma raça:
+      * **OBS:** *As raças são cadastradas por meio do cadastro de um pet.*
 
 ## OBSERVAÇÕES DO PROJETO
 
@@ -49,6 +62,8 @@ A outra forma de enviar e-mail foi a última configurada no projeto e a que est�
 
 E um grande diferencial do NodeMailer ao SendGrid é que o mesmo é gratuito, o SendGrid é um serviço pago com uma cota de uso gratuita que limita um total de envios de e-mails diários e passado o limite máximo gratuito de envios, para continuar usando o mesmo terá que ser adquirido o seriviço, o NodeMailer nesse ponto e ilimitado e totalmente configurável e customizável.
 
+O projeto possui a nova funcionalidade de envio de SMS, utilizando a biblioteca [Nestjs Twilio](https://www.npmjs.com/package/nestjs-twilio) em conjunto com o serviço de sms da própria plataforma Twilio, para prover a feature de envio de sms pela API para com seus usuários.
+
 ## TECNOLOGIAS QUE FORAM UTILIZADAS NO PROJETO
 * NodeJs
 * ExpressJs
@@ -57,6 +72,7 @@ E um grande diferencial do NodeMailer ao SendGrid é que o mesmo é gratuito, o 
 * Docker
 * SendGrid
 * NodeMailer
+* NestJs Twilio (SMS)
 * Handlebars
 * PostgreSQL
 * Jwt
@@ -64,6 +80,7 @@ E um grande diferencial do NodeMailer ao SendGrid é que o mesmo é gratuito, o 
 * Date fns
 * BCrypt
 * Class Transformer e Class Validator
+* NestJs TypeORM Paginate
 * Entre outros
 
 ## CASO QUEIRA SABER MAIS SOBRE O PROJETO
