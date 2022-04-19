@@ -7,9 +7,9 @@ import {
 } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { isAfter } from 'date-fns';
-import SendSMSConfirmRecoverPasswordService from 'src/modules/messages/services/sendSMSConfirmRecoverPassword.service';
 import { Repository } from 'typeorm';
 import SendEmailConfirmRecoverPasswordService from '../../../modules/mail/services/sendEmailConfirmRecoverPassword.service';
+import SendSMSConfirmRecoverPasswordService from '../../../modules/messages/services/sendSMSConfirmRecoverPassword.service';
 import User from '../../../modules/user/infra/typeorm/entities/User';
 import RedefinePasswordDTO from '../dto/RedefinePasswordDTO';
 import Token from '../infra/typeorm/entities/Token';

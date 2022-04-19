@@ -1,18 +1,20 @@
+import { NotFoundException, UnauthorizedException } from '@nestjs/common';
 import { Test, TestingModule } from '@nestjs/testing';
 import { getRepositoryToken } from '@nestjs/typeorm';
-import User from '../../../modules/user/infra/typeorm/entities/User';
+import RedefinePasswordDTO from 'src/modules/authenticate/dto/RedefinePasswordDTO';
 import Token from '../../../modules/authenticate/infra/typeorm/entities/Token';
+import BCryptHashPassword from '../../../modules/authenticate/providers/Hash/implementations/BCryptHashPassword';
 import RedefinePasswordService from '../../../modules/authenticate/services/redefinePassword.service';
+import SendEmailConfirmRecoverPasswordService from '../../../modules/mail/services/sendEmailConfirmRecoverPassword.service';
+import SendSMSConfirmRecoverPasswordService from '../../../modules/messages/services/sendSMSConfirmRecoverPassword.service';
+import User from '../../../modules/user/infra/typeorm/entities/User';
 import {
   hashPasswordMockup,
   mailerMockup,
+  smsMockup,
   tokenRepositoryMockup,
   userRepositoryMockup,
 } from './mocks/mocksRedefinePassword';
-import BCryptHashPassword from '../../../modules/authenticate/providers/Hash/implementations/BCryptHashPassword';
-import SendEmailConfirmRecoverPasswordService from '../../../modules/mail/services/sendEmailConfirmRecoverPassword.service';
-import RedefinePasswordDTO from 'src/modules/authenticate/dto/RedefinePasswordDTO';
-import { NotFoundException, UnauthorizedException } from '@nestjs/common';
 
 describe('Testing the functions of recover password of user', () => {
   let recoverPasswordService: RedefinePasswordService;
@@ -37,6 +39,10 @@ describe('Testing the functions of recover password of user', () => {
           provide: SendEmailConfirmRecoverPasswordService,
           useValue: mailerMockup,
         },
+        {
+          provide: SendSMSConfirmRecoverPasswordService,
+          useValue: smsMockup,
+        },
       ],
     }).compile();
 
@@ -60,6 +66,7 @@ describe('Testing the functions of recover password of user', () => {
       username: 'usertest',
       email: 'usertest@gmail.com',
       password: '$2a$12$ef9HJafpDSQ13XnxrpuU.Og9O43rbuOnUlFMn6MAU3M2qa0DsQQYi',
+      phone: '+5585955555555',
       created_at: new Date(),
       updated_at: new Date(),
     };
@@ -71,7 +78,7 @@ describe('Testing the functions of recover password of user', () => {
       user_id: userCreatedOutputMock.id,
       user: userCreatedOutputMock,
       used_in: null,
-      expires: new Date('2022/03/03'),
+      expires: new Date('2022/04/28'),
       created_at: new Date(),
       updated_at: new Date(),
     };
@@ -199,6 +206,7 @@ describe('Testing the functions of recover password of user', () => {
       username: 'usertest',
       email: 'usertest@gmail.com',
       password: '$2a$12$ef9HJafpDSQ13XnxrpuU.Og9O43rbuOnUlFMn6MAU3M2qa0DsQQYi',
+      phone: '+5585955555555',
       created_at: new Date(),
       updated_at: new Date(),
     };
@@ -210,7 +218,7 @@ describe('Testing the functions of recover password of user', () => {
       user_id: userCreatedOutputMock.id,
       user: userCreatedOutputMock,
       used_in: null,
-      expires: new Date('2022/03/03'),
+      expires: new Date('2022/04/28'),
       created_at: new Date(),
       updated_at: new Date(),
     };
@@ -260,6 +268,7 @@ describe('Testing the functions of recover password of user', () => {
       username: 'usertest',
       email: 'usertest@gmail.com',
       password: '$2a$12$ef9HJafpDSQ13XnxrpuU.Og9O43rbuOnUlFMn6MAU3M2qa0DsQQYi',
+      phone: '+5585955555555',
       created_at: new Date(),
       updated_at: new Date(),
     };
@@ -271,7 +280,7 @@ describe('Testing the functions of recover password of user', () => {
       user_id: userCreatedOutputMock.id,
       user: userCreatedOutputMock,
       used_in: null,
-      expires: new Date('2022/03/03'),
+      expires: new Date('2022/04/28'),
       created_at: new Date(),
       updated_at: new Date(),
     };
@@ -284,8 +293,8 @@ describe('Testing the functions of recover password of user', () => {
         user_id: userCreatedOutputMock.id,
         user: userCreatedOutputMock,
         used_in: null,
-        expires: new Date('2022/03/03'),
-        created_at: new Date('2022/02/26'),
+        expires: new Date('2022/04/28'),
+        created_at: new Date('2022/04/28'),
         updated_at: new Date(),
       },
       {
@@ -295,8 +304,8 @@ describe('Testing the functions of recover password of user', () => {
         user_id: userCreatedOutputMock.id,
         user: userCreatedOutputMock,
         used_in: null,
-        expires: new Date('2022/03/03'),
-        created_at: new Date('2022/02/26'),
+        expires: new Date('2022/04/28'),
+        created_at: new Date('2022/04/28'),
         updated_at: new Date(),
       },
     ];
@@ -353,6 +362,7 @@ describe('Testing the functions of recover password of user', () => {
       username: 'usertest',
       email: 'usertest@gmail.com',
       password: '$2a$12$ef9HJafpDSQ13XnxrpuU.Og9O43rbuOnUlFMn6MAU3M2qa0DsQQYi',
+      phone: '+5585955555555',
       created_at: new Date(),
       updated_at: new Date(),
     };
@@ -419,6 +429,7 @@ describe('Testing the functions of recover password of user', () => {
       username: 'usertest',
       email: 'usertest@gmail.com',
       password: '$2a$12$ef9HJafpDSQ13XnxrpuU.Og9O43rbuOnUlFMn6MAU3M2qa0DsQQYi',
+      phone: '+5585955555555',
       created_at: new Date(),
       updated_at: new Date(),
     };
@@ -430,7 +441,7 @@ describe('Testing the functions of recover password of user', () => {
       user_id: userCreatedOutputMock.id,
       user: userCreatedOutputMock,
       used_in: new Date(),
-      expires: new Date('2022/03/03'),
+      expires: new Date('2022/04/28'),
       created_at: new Date(),
       updated_at: new Date(),
     };
@@ -487,6 +498,7 @@ describe('Testing the functions of recover password of user', () => {
       username: 'usertest',
       email: 'usertest@gmail.com',
       password: '$2a$12$ef9HJafpDSQ13XnxrpuU.Og9O43rbuOnUlFMn6MAU3M2qa0DsQQYi',
+      phone: '+5585955555555',
       created_at: new Date(),
       updated_at: new Date(),
     };
@@ -498,7 +510,7 @@ describe('Testing the functions of recover password of user', () => {
       user_id: userCreatedOutputMock.id,
       user: userCreatedOutputMock,
       used_in: null,
-      expires: new Date('2022/03/03'),
+      expires: new Date('2022/04/28'),
       created_at: new Date(),
       updated_at: new Date(),
     };
@@ -555,6 +567,7 @@ describe('Testing the functions of recover password of user', () => {
       username: 'usertest',
       email: 'usertest@gmail.com',
       password: '$2a$12$ef9HJafpDSQ13XnxrpuU.Og9O43rbuOnUlFMn6MAU3M2qa0DsQQYi',
+      phone: '+5585955555555',
       created_at: new Date(),
       updated_at: new Date(),
     };
@@ -566,7 +579,7 @@ describe('Testing the functions of recover password of user', () => {
       user_id: userCreatedOutputMock.id,
       user: userCreatedOutputMock,
       used_in: null,
-      expires: new Date('2022/03/03'),
+      expires: new Date('2022/04/28'),
       created_at: new Date(),
       updated_at: new Date(),
     };

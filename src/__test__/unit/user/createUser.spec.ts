@@ -1,15 +1,15 @@
+import { ConflictException } from '@nestjs/common';
 import { Test, TestingModule } from '@nestjs/testing';
 import { getRepositoryToken } from '@nestjs/typeorm';
-import CreateUserService from '../../../modules/user/services/createUser.service';
-import User from '../../../modules/user/infra/typeorm/entities/User';
 import SendEmailNewUserService from '../../../modules/mail/services/sendEmailNewUser.service';
+import User from '../../../modules/user/infra/typeorm/entities/User';
 import BCryptHash from '../../../modules/user/providers/Hash/implementations/BCryptHash';
+import CreateUserService from '../../../modules/user/services/createUser.service';
 import {
-  userRepositoryMockup,
   hashPasswordMockup,
   mailerMockup,
+  userRepositoryMockup,
 } from './mocks/mocksCreateUser';
-import { ConflictException } from '@nestjs/common';
 
 describe('Testing the functions of create users', () => {
   let createUserService: CreateUserService;
@@ -51,6 +51,7 @@ describe('Testing the functions of create users', () => {
         username: 'usertest',
         email: 'usertest@gmail.com',
         password: 'qwe123',
+        phone: '+5585955555555',
       };
 
     const userCreatedOutputMock: User = {
@@ -59,6 +60,7 @@ describe('Testing the functions of create users', () => {
       username: 'usertest',
       email: 'usertest@gmail.com',
       password: '$2a$12$ef9HJafpDSQ13XnxrpuU.Og9O43rbuOnUlFMn6MAU3M2qa0DsQQYi',
+      phone: '+5585955555555',
       created_at: new Date(),
       updated_at: new Date(),
     };
@@ -75,6 +77,7 @@ describe('Testing the functions of create users', () => {
       username: userCreateInputMock.username,
       email: userCreateInputMock.email,
       password: userCreateInputMock.password,
+      phone: userCreateInputMock.phone,
     });
 
     expect(response).toEqual(userCreatedOutputMock);
@@ -97,7 +100,7 @@ describe('Testing the functions of create users', () => {
     expect(userRepositoryMockup.save).toHaveBeenCalled();
     expect(mailerMockup.execute).toHaveBeenCalled();
     expect(hashPasswordMockup.generateHash).toHaveBeenCalled();
-    expect(userRepositoryMockup.findOne).toHaveBeenCalledTimes(2);
+    expect(userRepositoryMockup.findOne).toHaveBeenCalledTimes(3);
     expect(userRepositoryMockup.create).toHaveBeenCalledTimes(1);
     expect(userRepositoryMockup.save).toHaveBeenCalledTimes(1);
     expect(mailerMockup.execute).toHaveBeenCalledTimes(1);
@@ -111,6 +114,7 @@ describe('Testing the functions of create users', () => {
         username: 'usertest2',
         email: 'usertest@gmail.com',
         password: 'qwe123',
+        phone: '+5585955555555',
       };
 
     const userCreatedOutputMock: User = {
@@ -119,6 +123,7 @@ describe('Testing the functions of create users', () => {
       username: 'usertest',
       email: 'usertest@gmail.com',
       password: '$2a$12$ef9HJafpDSQ13XnxrpuU.Og9O43rbuOnUlFMn6MAU3M2qa0DsQQYi',
+      phone: '+5585955555555',
       created_at: new Date(),
       updated_at: new Date(),
     };
@@ -133,6 +138,7 @@ describe('Testing the functions of create users', () => {
         username: userCreateInputMock.username,
         email: userCreateInputMock.email,
         password: userCreateInputMock.password,
+        phone: userCreateInputMock.phone,
       }),
     ).rejects.toEqual(
       new ConflictException('This email is in usage for other user'),
@@ -156,6 +162,7 @@ describe('Testing the functions of create users', () => {
         username: 'usertest',
         email: 'usertest2@gmail.com',
         password: 'qwe123',
+        phone: '+5585955555555',
       };
 
     const userCreatedOutputMock: User = {
@@ -164,6 +171,7 @@ describe('Testing the functions of create users', () => {
       username: 'usertest',
       email: 'usertest@gmail.com',
       password: '$2a$12$ef9HJafpDSQ13XnxrpuU.Og9O43rbuOnUlFMn6MAU3M2qa0DsQQYi',
+      phone: '+5585955555555',
       created_at: new Date(),
       updated_at: new Date(),
     };
@@ -179,6 +187,7 @@ describe('Testing the functions of create users', () => {
         username: userCreateInputMock.username,
         email: userCreateInputMock.email,
         password: userCreateInputMock.password,
+        phone: userCreateInputMock.phone,
       }),
     ).rejects.toEqual(
       new ConflictException('This username is in usage for other user'),

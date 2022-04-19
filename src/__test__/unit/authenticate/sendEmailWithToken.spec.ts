@@ -1,15 +1,15 @@
+import { NotFoundException } from '@nestjs/common';
 import { Test, TestingModule } from '@nestjs/testing';
 import { getRepositoryToken } from '@nestjs/typeorm';
-import User from '../../../modules/user/infra/typeorm/entities/User';
-import SendEmailWithTokenService from '../../../modules/authenticate/services/sendEmailWithToken.service';
 import Token from '../../../modules/authenticate/infra/typeorm/entities/Token';
+import SendEmailWithTokenService from '../../../modules/authenticate/services/sendEmailWithToken.service';
+import SendEmailWithTokenForRecoverPasswordService from '../../../modules/mail/services/sendEmailWithTokenForRecoverPassword.service';
+import User from '../../../modules/user/infra/typeorm/entities/User';
 import {
-  userRepositoryMockup,
   mailerMockup,
   tokenRepositoryMockup,
+  userRepositoryMockup,
 } from './mocks/mocksSendEmailWithToken';
-import SendEmailWithTokenForRecoverPasswordService from '../../../modules/mail/services/sendEmailWithTokenForRecoverPassword.service';
-import { NotFoundException } from '@nestjs/common';
 
 describe('Testing the functions of send email with token for recover password of users', () => {
   let sendEmailWithTokenService: SendEmailWithTokenService;
@@ -54,6 +54,7 @@ describe('Testing the functions of send email with token for recover password of
       username: 'usertest',
       email: 'usertest@gmail.com',
       password: '$2a$12$ef9HJafpDSQ13XnxrpuU.Og9O43rbuOnUlFMn6MAU3M2qa0DsQQYi',
+      phone: '+5585955555555',
       created_at: new Date(),
       updated_at: new Date(),
     };
