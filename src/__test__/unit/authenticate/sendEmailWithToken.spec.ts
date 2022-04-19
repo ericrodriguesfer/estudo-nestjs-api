@@ -74,6 +74,9 @@ describe('Testing the functions of send email with token for recover password of
     userRepositoryMockup.findOne.mockReturnValue(
       Promise.resolve(userCreatedOutputMock),
     );
+    tokenRepositoryMockup.findOne.mockReturnValue(
+      Promise.resolve(createTokenOutoutMock),
+    );
     tokenRepositoryMockup.create.mockReturnValue(
       Promise.resolve(createTokenOutoutMock),
     );
@@ -105,12 +108,13 @@ describe('Testing the functions of send email with token for recover password of
     expect(response.created_at).toBe(createTokenOutoutMock.created_at);
     expect(response.updated_at).toBe(createTokenOutoutMock.updated_at);
     expect(userRepositoryMockup.findOne).toHaveBeenCalled();
-    expect(tokenRepositoryMockup.save).toHaveBeenCalled();
-    expect(tokenRepositoryMockup.create).toHaveBeenCalled();
+    expect(tokenRepositoryMockup.save).not.toHaveBeenCalled();
+    expect(tokenRepositoryMockup.create).not.toHaveBeenCalled();
     expect(mailerMockup.execute).toHaveBeenCalled();
     expect(userRepositoryMockup.findOne).toHaveBeenCalledTimes(1);
-    expect(tokenRepositoryMockup.save).toHaveBeenCalledTimes(1);
-    expect(tokenRepositoryMockup.create).toHaveBeenCalledTimes(1);
+    expect(tokenRepositoryMockup.findOne).toHaveBeenCalledTimes(1);
+    expect(tokenRepositoryMockup.save).toHaveBeenCalledTimes(0);
+    expect(tokenRepositoryMockup.create).toHaveBeenCalledTimes(0);
     expect(mailerMockup.execute).toHaveBeenCalledTimes(1);
   });
   it('Should not be able send a email with token of recover password because the email repassed does not exists in database', async () => {

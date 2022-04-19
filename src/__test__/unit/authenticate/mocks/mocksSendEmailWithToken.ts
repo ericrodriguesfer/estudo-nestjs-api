@@ -3,6 +3,7 @@ const userRepositoryMockup = {
 };
 
 const tokenRepositoryMockup = {
+  findOne: jest.fn(),
   create: jest.fn(),
   save: jest.fn(),
 };
