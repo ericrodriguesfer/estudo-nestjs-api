@@ -1,13 +1,13 @@
+import { NotFoundException, UnauthorizedException } from '@nestjs/common';
 import { Test, TestingModule } from '@nestjs/testing';
 import { getRepositoryToken } from '@nestjs/typeorm';
-import UpdateUserService from '../../../modules/user/services/updateUser.service';
 import User from '../../../modules/user/infra/typeorm/entities/User';
 import BCryptHash from '../../../modules/user/providers/Hash/implementations/BCryptHash';
+import UpdateUserService from '../../../modules/user/services/updateUser.service';
 import {
-  userRepositoryMockup,
   hashPasswordMockup,
+  userRepositoryMockup,
 } from './mocks/mocksUpdateUser';
-import { NotFoundException, UnauthorizedException } from '@nestjs/common';
 
 describe('Testing the functions of update users', () => {
   let updateUserService: UpdateUserService;
@@ -45,6 +45,7 @@ describe('Testing the functions of update users', () => {
       username: 'usertest',
       email: 'usertest@gmail.com',
       password: '$2a$12$ef9HJafpDSQ13XnxrpuU.Og9O43rbuOnUlFMn6MAU3M2qa0DsQQYi',
+      phone: '+5585955555555',
       created_at: new Date(),
       updated_at: new Date(),
     };
@@ -100,6 +101,7 @@ describe('Testing the functions of update users', () => {
       username: 'usertest',
       email: 'usertest2@gmail.com',
       password: '$2a$12$ef9HJafpDSQ13XnxrpuU.Og9O43rbuOnUlFMn6MAU3M2qa0DsQQYi',
+      phone: '+5585955555555',
       created_at: new Date(),
       updated_at: new Date(),
     };
@@ -171,6 +173,7 @@ describe('Testing the functions of update users', () => {
       username: 'usertest',
       email: 'usertest@gmail.com',
       password: '$2a$12$ef9HJafpDSQ13XnxrpuU.Og9O43rbuOnUlFMn6MAU3M2qa0DsQQYi',
+      phone: '+5585955555555',
       created_at: new Date(),
       updated_at: new Date(),
     };
@@ -212,6 +215,7 @@ describe('Testing the functions of update users', () => {
       username: 'usertest',
       email: 'usertest@gmail.com',
       password: '$2a$12$ef9HJafpDSQ13XnxrpuU.Og9O43rbuOnUlFMn6MAU3M2qa0DsQQYi',
+      phone: '+5585955555555',
       created_at: new Date(),
       updated_at: new Date(),
     };
@@ -252,6 +256,7 @@ describe('Testing the functions of update users', () => {
         username: 'usertest2',
         email: 'usertest2@gmail.com',
         password: '123qwe',
+        phone: '+5585955555555',
       };
 
     const userUpdatedOutputMock: User = {
@@ -260,6 +265,7 @@ describe('Testing the functions of update users', () => {
       username: 'usertest2',
       email: 'usertest2@gmail.com',
       password: '$2a$12$ef9HJafpDSQ13XnxrpuU.Og9O43rbuOnUlFMn6MAU3M2qa0DsQQYi',
+      phone: '+5585955555555',
       created_at: new Date(),
       updated_at: new Date(),
     };
@@ -322,6 +328,7 @@ describe('Testing the functions of update users', () => {
       username: 'usertest',
       email: 'usertest@gmail.com',
       password: '$2a$12$ef9HJafpDSQ13XnxrpuU.Og9O43rbuOnUlFMn6MAU3M2qa0DsQQYi',
+      phone: '+5585955555555',
       created_at: new Date(),
       updated_at: new Date(),
     };

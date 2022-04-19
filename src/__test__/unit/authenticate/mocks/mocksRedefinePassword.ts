@@ -15,6 +15,10 @@ const mailerMockup = {
   execute: jest.fn().mockImplementation(),
 };
 
+const smsMockup = {
+  execute: jest.fn().mockImplementation(),
+};
+
 const hashPasswordMockup = {
   compareHash: jest.fn(),
   generateHash: jest
@@ -30,5 +34,6 @@ export {
   userRepositoryMockup,
   tokenRepositoryMockup,
   mailerMockup,
+  smsMockup,
   hashPasswordMockup,
 };

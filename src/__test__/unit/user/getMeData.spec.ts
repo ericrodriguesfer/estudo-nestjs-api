@@ -1,8 +1,8 @@
+import { NotFoundException } from '@nestjs/common';
 import { Test, TestingModule } from '@nestjs/testing';
 import { getRepositoryToken } from '@nestjs/typeorm';
-import { NotFoundException } from '@nestjs/common';
-import GetMeDataService from '../../../modules/user/services/getMeData.service';
 import User from '../../../modules/user/infra/typeorm/entities/User';
+import GetMeDataService from '../../../modules/user/services/getMeData.service';
 import { userRepositoryMockup } from './mocks/mocksGetMeData';
 
 describe('Testing the functions of get me data of users', () => {
@@ -38,6 +38,7 @@ describe('Testing the functions of get me data of users', () => {
       username: 'usertest',
       email: 'usertest@gmail.com',
       password: '$2a$12$ef9HJafpDSQ13XnxrpuU.Og9O43rbuOnUlFMn6MAU3M2qa0DsQQYi',
+      phone: '+5585955555555',
       created_at: new Date(),
       updated_at: new Date(),
     };

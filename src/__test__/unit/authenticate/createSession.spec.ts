@@ -1,16 +1,16 @@
+import { NotFoundException, UnauthorizedException } from '@nestjs/common';
+import { JwtService } from '@nestjs/jwt';
 import { Test, TestingModule } from '@nestjs/testing';
 import { getRepositoryToken } from '@nestjs/typeorm';
+import CreateSessionDTO from '../../../modules/authenticate/dto/CreateSessionDTO';
 import BCryptHashPassword from '../../../modules/authenticate/providers/Hash/implementations/BCryptHashPassword';
-import User from '../../../modules/user/infra/typeorm/entities/User';
 import CreateSessionService from '../../../modules/authenticate/services/createSession.service';
+import User from '../../../modules/user/infra/typeorm/entities/User';
 import {
   hashPasswordMockup,
   jwtServiceMockup,
   userRepositoryMockup,
 } from './mocks/mocksCreateSession';
-import { JwtService } from '@nestjs/jwt';
-import CreateSessionDTO from '../../../modules/authenticate/dto/CreateSessionDTO';
-import { NotFoundException, UnauthorizedException } from '@nestjs/common';
 
 describe('Testing the functions of authenticating for create sessions of users', () => {
   let createSessionService: CreateSessionService;
@@ -59,6 +59,7 @@ describe('Testing the functions of authenticating for create sessions of users',
       username: 'usertest',
       email: 'usertest@gmail.com',
       password: '$2a$12$ef9HJafpDSQ13XnxrpuU.Og9O43rbuOnUlFMn6MAU3M2qa0DsQQYi',
+      phone: '+5585955555555',
       created_at: new Date(),
       updated_at: new Date(),
     };
@@ -118,6 +119,7 @@ describe('Testing the functions of authenticating for create sessions of users',
       username: 'usertest',
       email: 'usertest@gmail.com',
       password: '$2a$12$ef9HJafpDSQ13XnxrpuU.Og9O43rbuOnUlFMn6MAU3M2qa0DsQQYi',
+      phone: '+5585955555555',
       created_at: new Date(),
       updated_at: new Date(),
     };

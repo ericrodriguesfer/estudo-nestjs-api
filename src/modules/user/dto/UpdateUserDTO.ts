@@ -52,7 +52,7 @@ class UpdateUserDTO {
   )
   @IsOptional()
   @ApiPropertyOptional()
-  phone: string;
+  phone?: string;
 }
 
 export default UpdateUserDTO;
