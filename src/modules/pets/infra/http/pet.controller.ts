@@ -10,14 +10,14 @@ import {
   Post,
   Put,
   Query,
-  Request,
   UseInterceptors,
   UsePipes,
   ValidationPipe,
 } from '@nestjs/common';
 import { ApiBody } from '@nestjs/swagger';
 import { Pagination } from 'nestjs-typeorm-paginate';
-import IRequestUser from 'src/modules/user/dto/IRequestUser';
+import UserDecorator from 'src/app/decorators/user.decorator';
+import User from 'src/modules/user/infra/typeorm/entities/User';
 import CreatePetDTO from '../../dto/CreatePetDTO';
 import IResponseBreed from '../../dto/IResponseBreed';
 import IResponsePet from '../../dto/IResponsePet';
@@ -50,37 +50,37 @@ class PetController {
   @UsePipes(ValidationPipe)
   @UseInterceptors(ClassSerializerInterceptor)
   getAllPets(
-    @Request() request: IRequestUser,
+    @UserDecorator() user: User,
     @Query('page', new DefaultValuePipe(1), ParseIntPipe) page = 1,
     @Query('limit', new DefaultValuePipe(5), ParseIntPipe) limit = 5,
   ): Promise<Pagination<Pet>> {
     limit = limit > 10 ? 10 : limit;
-    return this.listAllPetService.execute(request.user.id, { page, limit });
+    return this.listAllPetService.execute(user.id, { page, limit });
   }
 
   @Get('breeds')
   @UsePipes(ValidationPipe)
   @UseInterceptors(ClassSerializerInterceptor)
   getAllBreeds(
-    @Request() request: IRequestUser,
+    @UserDecorator() user: User,
     @Query('page', new DefaultValuePipe(1), ParseIntPipe) page = 1,
     @Query('limit', new DefaultValuePipe(5), ParseIntPipe) limit = 5,
   ): Promise<Pagination<Breed>> {
     limit = limit > 10 ? 10 : limit;
-    return this.listAllBreedsService.execute(request.user.id, { page, limit });
+    return this.listAllBreedsService.execute(user.id, { page, limit });
   }
 
   @Get('breed/:id')
   @UsePipes(ValidationPipe)
   @UseInterceptors(ClassSerializerInterceptor)
   getAllPetOfBreed(
-    @Request() request: IRequestUser,
+    @UserDecorator() user: User,
     @Param('id') id: string,
     @Query('page', new DefaultValuePipe(1), ParseIntPipe) page = 1,
     @Query('limit', new DefaultValuePipe(5), ParseIntPipe) limit = 5,
   ): Promise<Pagination<Breed>> {
     limit = limit > 10 ? 10 : limit;
-    return this.listAllPetOfBreedService.execute(request.user.id, id, {
+    return this.listAllPetOfBreedService.execute(user.id, id, {
       page,
       limit,
     });
@@ -90,12 +90,12 @@ class PetController {
   @UsePipes(ValidationPipe)
   @UseInterceptors(ClassSerializerInterceptor)
   updateBreed(
-    @Request() request: IRequestUser,
+    @UserDecorator() user: User,
     @Param('id') id: string,
     @Body('name') name: string,
   ): Promise<Breed> {
     return this.updateBreedService.execute({
-      idUser: request.user.id,
+      idUser: user.id,
       idBreed: id,
       name,
     });
@@ -105,10 +105,10 @@ class PetController {
   @UsePipes(ValidationPipe)
   @UseInterceptors(ClassSerializerInterceptor)
   deleteBreed(
-    @Request() request: IRequestUser,
+    @UserDecorator() user: User,
     @Param('id') id: string,
   ): Promise<IResponseBreed> {
-    return this.deleteBreedService.execute(request.user.id, id);
+    return this.deleteBreedService.execute(user.id, id);
   }
 
   @Post()
@@ -116,31 +116,31 @@ class PetController {
   @UseInterceptors(ClassSerializerInterceptor)
   @ApiBody({ type: CreatePetDTO })
   createPet(
-    @Request() request: IRequestUser,
+    @UserDecorator() user: User,
     @Body() { name, age, breed }: CreatePetDTO,
   ): Promise<Pet> {
-    return this.createPetService.execute(request.user.id, { name, age, breed });
+    return this.createPetService.execute(user.id, { name, age, breed });
   }
 
   @Put(':id')
   @UsePipes(ValidationPipe)
   @UseInterceptors(ClassSerializerInterceptor)
   updatePet(
-    @Request() request: IRequestUser,
+    @UserDecorator() user: User,
     @Param('id') id: string,
     @Body() pet: UpdatedPetDTO,
   ): Promise<Pet> {
-    return this.updatePetService.execute(request.user.id, id, pet);
+    return this.updatePetService.execute(user.id, id, pet);
   }
 
   @Delete(':id')
   @UsePipes(ValidationPipe)
   @UseInterceptors(ClassSerializerInterceptor)
   deletePet(
-    @Request() request: IRequestUser,
+    @UserDecorator() user: User,
     @Param('id') id: string,
   ): Promise<IResponsePet> {
-    return this.deletePetService.execute(request.user.id, id);
+    return this.deletePetService.execute(user.id, id);
   }
 }
 
