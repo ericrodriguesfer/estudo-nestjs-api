@@ -5,14 +5,13 @@ import {
   Get,
   Post,
   Put,
-  Request,
   UseInterceptors,
   UsePipes,
   ValidationPipe,
 } from '@nestjs/common';
 import { ApiBearerAuth, ApiBody } from '@nestjs/swagger';
+import UserDecorator from '../../../../app/decorators/user.decorator';
 import CreateUserDTO from '../../dto/CreateUserDTO';
-import IRequestUser from '../../dto/IRequestUser';
 import UpdateUserDTO from '../../dto/UpdateUserDTO';
 import CreateUserService from '../../services/createUser.service';
 import GetMeDataService from '../../services/getMeData.service';
@@ -31,8 +30,8 @@ class UserController {
   @UsePipes(ValidationPipe)
   @UseInterceptors(ClassSerializerInterceptor)
   @ApiBearerAuth()
-  getMe(@Request() request: IRequestUser): Promise<User> {
-    return this.getMeDataService.execute({ email: request.user.email });
+  getMe(@UserDecorator() user: User): Promise<User> {
+    return this.getMeDataService.execute({ email: user.email });
   }
 
   @Post()
@@ -57,10 +56,10 @@ class UserController {
   @ApiBody({ type: UpdateUserDTO })
   @ApiBearerAuth()
   updateUser(
-    @Request() request: IRequestUser,
+    @UserDecorator() user: User,
     @Body() { name, username, email, password, phone }: UpdateUserDTO,
   ): Promise<User> {
-    return this.updateUserService.execute(request.user.id, {
+    return this.updateUserService.execute(user.id, {
       name,
       username,
       email,
