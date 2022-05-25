@@ -4,7 +4,7 @@ import {
   NotFoundException,
 } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { addDays } from 'date-fns';
+import { addDays, isAfter } from 'date-fns';
 import { Repository } from 'typeorm';
 import SendEmailWithTokenForRecoverPasswordService from '../../../modules/mail/services/sendEmailWithTokenForRecoverPassword.service';
 import User from '../../../modules/user/infra/typeorm/entities/User';
@@ -34,7 +34,12 @@ class SendEmailWithTokenService {
         order: { created_at: 'DESC' },
       });
 
-      if (lastToken && !lastToken.used && lastToken.used_in === null) {
+      if (
+        isAfter(new Date(lastToken.expires), new Date()) &&
+        lastToken &&
+        !lastToken.used &&
+        lastToken.used_in === null
+      ) {
         await this.mail.execute({ user, token: lastToken.token });
 
         return lastToken;
